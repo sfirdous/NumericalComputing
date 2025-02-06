@@ -31,4 +31,11 @@ public:
 
     // Derivative
     double df(double x);
+
+    //
+    double g(double x);
+
+    //
+    double dg(double x);
+
 };

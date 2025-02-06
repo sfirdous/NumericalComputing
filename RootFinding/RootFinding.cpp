@@ -58,3 +58,14 @@ double RootFinding::df(double x)
 {
     return 3 * x * x - 4; // Derivative: f'(x) = 3x² - 4
 }
+
+//
+double RootFinding::g(double x)
+{
+    return  (4*x + 9)/3;
+}
+
+double RootFinding::dg(double x)
+{
+    return 4/3;
+}

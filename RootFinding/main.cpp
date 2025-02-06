@@ -5,8 +5,8 @@ int main(){
 
     double a,b;
     RootFinding R;
-    R.bisection(a,b);
-    R.newtonRaphson();
+    // R.bisection(a,b);
+    // R.newtonRaphson();
     R.fixedPointIteration();
 
     return 0;

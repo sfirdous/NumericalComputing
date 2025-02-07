@@ -65,7 +65,3 @@ double RootFinding::g(double x)
     return  (4*x + 9)/3;
 }
 
-double RootFinding::dg(double x)
-{
-   return 4/3;
-}

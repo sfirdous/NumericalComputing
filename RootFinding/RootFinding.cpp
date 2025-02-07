@@ -34,7 +34,7 @@ bool RootFinding::findStartingInterval(double &a, double &b)
     return false;
 }
 
-// Method for finding initial points for newton raphson and fixed point
+// Method for finding initial points for Newton Raphson and fixed point
 double RootFinding::findInitialGuess()
 {
     for (double x = start; x < end; x += step)
@@ -50,18 +50,18 @@ double RootFinding::findInitialGuess()
 // Polynomail
 double RootFinding::f(double x)
 {
-    return x * x * x - 4 * x - 9; // f(x) = x³ - 4x - 9
+    return x * x  - 5*x + 5; 
 }
 
-// Derivative of Polynomail
+// Derivative of Polynomial
 double RootFinding::df(double x)
 {
-    return 3 * x * x - 4; // Derivative: f'(x) = 3x² - 4
+    return 2* x  - 5; 
 }
 
 //
 double RootFinding::g(double x)
 {
-    return  (4*x + 9)/3;
+    return  (x*x + 5)/5;
 }
 

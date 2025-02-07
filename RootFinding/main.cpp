@@ -5,9 +5,9 @@ int main(){
 
     double a,b;
     RootFinding R;
-    R.bisection(a,b);
-    R.newtonRaphson();
-    R.fixedPointIteration();
+    double bRoot = R.bisection(a,b);
+    double nRoot = R.newtonRaphson();
+    double fRoot = R.fixedPointIteration();
 
     return 0;
 }

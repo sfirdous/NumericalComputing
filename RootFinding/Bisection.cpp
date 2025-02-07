@@ -39,6 +39,6 @@ void RootFinding::bisection(double &a, double &b)
     }
 
     cout << "--------------------------------------------------\n";
-    cout << "Root Approximation: " << mid << "\n";
+    cout << "Bisection Root Approximation: " << mid << "\n";
     cout << "Total Iterations: " << iteration + 1 << "\n";
 }

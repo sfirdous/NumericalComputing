@@ -4,28 +4,28 @@
 
 class RootFinding
 {
-    private:
+private:
     double tol;
     double start;
     double end;
     double step;
 
-    public:
+public:
+    //Constructors
     RootFinding();
     RootFinding(double tol, double start, double end, double step);
-    bool findStartingInterval(double &a, double &b);
-    double findInitialGuess();
+
+    //Root Finding Methods
+    double newtonRaphson();
+    double fixedPointIteration();
+    double bisection(double &a, double &b);
+
+    //Polynomail's
     double f(double x);
     double df(double x);
     double g(double x);
-    double dg(double x);
-    void newtonRaphson();
-    void fixedPointIteration();
-    void bisection(double& a, double& b);
 
-
-
-
-
-
+    bool findStartingInterval(double &a, double &b);
+    double findInitialGuess();
+    
 };

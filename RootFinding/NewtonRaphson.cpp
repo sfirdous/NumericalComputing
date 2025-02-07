@@ -1,10 +1,10 @@
 #include "RootFinding.hpp"
 using namespace std;
 
-void RootFinding::newtonRaphson()
+double RootFinding::newtonRaphson()
 {
     double x0 = findInitialGuess(); 
-    cout << fixed << setprecision(4); 
+    cout << fixed << setprecision(6); 
     cout << "Iter |    x        |   f(x)      |   f'(x)     |   x_new     |  Diff  \n";
     cout << "------------------------------------------------------------------------\n";
 
@@ -19,7 +19,7 @@ void RootFinding::newtonRaphson()
         if (fabs(dfx) < tol)
         { 
             cout << "Derivative too small. Method failed.\n";
-            return;
+            return -1.0;
         }
 
         x_new = x0 - (fx / dfx);        
@@ -39,4 +39,6 @@ void RootFinding::newtonRaphson()
 
     cout << "------------------------------------------------------------------------\n";
     cout << "Newton Raphson Root Approximation: " << x_new << " (after " << iteration + 1 << " iterations)\n";
+
+    return x_new;
 }

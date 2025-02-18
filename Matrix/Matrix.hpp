@@ -11,7 +11,7 @@ private:
 public:
     //Constructors
     Matrix(int r,int c);
-    Matrix(Matrix& matrix);
+    Matrix(Matrix<T>& matrix);
     Matrix(string filename);
 
     //Setter's and Getter's
@@ -21,23 +21,22 @@ public:
     void setCol(int c){this->nCols = c;}
     int getCol(){return nCols;}
 
-
-    //Accept values of matrix from user
-    void setMatrix();
+    void setValues();
+    T** getValues(){return matrix;}
 
     //Operations using methods
-    Matrix add(Matrix& B);
-    Matrix sub(Matrix& B);
-    Matrix mul(Matrix& B);
+    Matrix add(Matrix<T>& B);
+    Matrix sub(Matrix<T>& B);
+    Matrix mul(Matrix<T>& B);
 
     //Operations using operator overloading
-    Matrix operator+(Matrix& B);
-    Matrix operator-(Matrix& B);
-    Matrix operator*(Matrix& B);
+    Matrix operator+(Matrix<T>& B);
+    Matrix operator-(Matrix<T>& B);
+    Matrix operator*(Matrix<T>& B);
 
     //Property checking functions
-    bool isIdentity(Matrix& A);
-    bool isSymmetric(Matrix& A);
+    bool isIdentity(Matrix<T>& A);
+    bool isSymmetric(Matrix<T>& A);
 
     //Destructor
     ~Matrix();

@@ -15,13 +15,13 @@ Matrix<T>::Matrix(int r, int c)
         matrix[i] = new T [nCols];
     }
 
-    setMatrix();
+    setValues();
 
 }
 
 
 template <class T>
-void Matrix<T>::setMatrix()
+void Matrix<T>::setValues()
 {
     for(int i = 0 ; i < nRows ; ++i)
     {

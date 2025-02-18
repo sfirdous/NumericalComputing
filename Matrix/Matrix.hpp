@@ -1,3 +1,6 @@
+#ifndef MATRIX_HPP
+#define MATRIX_HPP
+
 #include <iostream>
 
 template <typename T>
@@ -12,7 +15,7 @@ public:
     //Constructors
     Matrix(int r,int c);
     Matrix(Matrix<T>& other);
-    Matrix(string filename);
+    // Matrix(string filename);
 
     //Setter's and Getter's
     void setRow(int r) {this->nRows = r;}
@@ -22,6 +25,7 @@ public:
     int getCol(){return nCols;}
 
     void setValues();
+    T getValue(int i,int j){return matrix[i][j];}
   
 
     //Operations using methods
@@ -34,6 +38,10 @@ public:
     Matrix<T> operator-(Matrix<T>& B);
     Matrix<T> operator*(Matrix<T>& B);
 
+    
+    template <typename U>
+    friend std::ostream& operator<<(std::ostream& os,Matrix<U>& m);
+
     //Property checking functions
     bool isIdentity(Matrix<T>& A);
     bool isSymmetric(Matrix<T>& A);
@@ -41,3 +49,7 @@ public:
     //Destructor
     ~Matrix();
 };
+
+#include "Matrix.tpp"
+
+#endif

@@ -1,5 +1,5 @@
 #include "Matrix.hpp"
-using namespace;
+using namespace std;
 
 template <typename T>
 Matrix<T>::Matrix(int r, int c)
@@ -15,6 +15,7 @@ Matrix<T>::Matrix(int r, int c)
         matrix[i] = new T [nCols];
     }
 
+    cout << "Enter values of Matrix" << endl;
     setValues();
 
 }
@@ -54,20 +55,17 @@ void Matrix<T>::setValues()
 
 
 //Operator overloading defination
-std::ostream& operator<<(std::ostream& os , Matrix<T>& m){
-    for(int i = 0 ; i < nRows ; ++i)
-    {
-        for(int j = 0 ; j < nCols ; ++j)
-        {
-            cout << matrix[i][j] << "\t";
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os,Matrix<T>& m) {
+    for (int i = 0; i < m.getRow(); ++i) {
+        for (int j = 0; j < m.getCol(); ++j) {
+            os << m.getValue(i, j) << "\t";
         }
-        cout << endl;
+        os << "\n";
     }
-
-
     return os;
 }
-
 
 template <typename T>
 Matrix<T>::~Matrix()
@@ -79,3 +77,4 @@ Matrix<T>::~Matrix()
 
     delete[] matrix;
 }
+

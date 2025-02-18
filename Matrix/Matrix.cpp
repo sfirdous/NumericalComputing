@@ -1,7 +1,7 @@
 #include "Matrix.hpp"
 using namespace;
 
-template <class T>
+template <typename T>
 Matrix<T>::Matrix(int r, int c)
 {
     nRows = r;
@@ -19,8 +19,28 @@ Matrix<T>::Matrix(int r, int c)
 
 }
 
+template <typename T>
+Matrix<T>::Matrix(Matrix<T>& other)
+{
+    nRows = other.getRow();
+    nCols = other.getCol();
 
-template <class T>
+    matrix = new T*[nRows];
+
+    for(int i = 0; i < nRows;++i)
+        matrix[i] = new T [nCols];
+
+    for(int i = 0 ; i < nRows ; ++i)
+    {
+        for(int j = 0 ; j < nCols ; ++j)
+        {
+            matrix[i][j] = other.matrix[i][j];
+        }
+    }
+
+}
+
+template <typename T>
 void Matrix<T>::setValues()
 {
     for(int i = 0 ; i < nRows ; ++i)
@@ -33,7 +53,23 @@ void Matrix<T>::setValues()
 }
 
 
-template <class T>
+//Operator overloading defination
+std::ostream& operator<<(std::ostream& os , Matrix<T>& m){
+    for(int i = 0 ; i < nRows ; ++i)
+    {
+        for(int j = 0 ; j < nCols ; ++j)
+        {
+            cout << matrix[i][j] << "\t";
+        }
+        cout << endl;
+    }
+
+
+    return os;
+}
+
+
+template <typename T>
 Matrix<T>::~Matrix()
 {
     for(int i = 0 ; i < nRows ; ++i)

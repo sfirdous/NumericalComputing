@@ -4,23 +4,26 @@ template <class T>
 class Matrix
 {
 private:
-    int rowSize;
-    int colSize;
+    int nRows;
+    int nCols;
     T **matrix;
 
 public:
     //Constructors
-    Matrix();
     Matrix(int r,int c);
     Matrix(Matrix& matrix);
     Matrix(string filename);
 
     //Setter's and Getter's
-    void setRow(int r) {this->rowSize = r;}
-    int getRow(){return rowSize;}
+    void setRow(int r) {this->nRows = r;}
+    int getRow(){return nRows;}
 
-    void setCol(int c){this->colSize = c;}
-    int getCol(){return colSize;}
+    void setCol(int c){this->nCols = c;}
+    int getCol(){return nCols;}
+
+
+    //Accept values of matrix from user
+    void setMatrix();
 
     //Operations using methods
     Matrix add(Matrix& B);

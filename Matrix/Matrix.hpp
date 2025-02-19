@@ -2,6 +2,8 @@
 #define MATRIX_HPP
 
 #include <iostream>
+#include <string.h>
+#include <fstream>
 
 template <typename T>
 class Matrix
@@ -15,7 +17,7 @@ public:
     //Constructors
     Matrix(int r,int c);
     Matrix(Matrix<T>& other);
-    // Matrix(string filename);
+    Matrix(std::string filename);
 
     //Setter's and Getter's
     void setRow(int r) {this->nRows = r;}
@@ -50,6 +52,6 @@ public:
     ~Matrix();
 };
 
-#include "Matrix.tpp"
+#include "Matrix.cpp"
 
 #endif

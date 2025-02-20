@@ -17,7 +17,7 @@ public:
     //Constructors
     Matrix();
     Matrix(int r,int c);
-    Matrix(Matrix<T>& other);
+    Matrix(const Matrix<T>& other);
     Matrix(std::string filename);
 
     //Setter's and Getter's
@@ -32,20 +32,20 @@ public:
   
 
     //Operations using methods
-    Matrix<T> add(Matrix<T>& B);
-    Matrix<T> sub(Matrix<T>& B);
-    Matrix<T> mul(Matrix<T>& B);
+    Matrix<T> add(const Matrix<T>& B) const; 
+    Matrix<T> sub(const Matrix<T>& B) const;
+    Matrix<T> mul(const Matrix<T>& B) const;
 
     //Operations using operator overloading
-    Matrix<T> operator+(Matrix<T>& B);
-    Matrix<T> operator-(Matrix<T>& B);
-    Matrix<T> operator*(Matrix<T>& B);
+    Matrix<T> operator+(const Matrix<T>& B) const;
+    Matrix<T> operator-(const Matrix<T>& B) const;
+    Matrix<T> operator*(const Matrix<T>& B) const;
 
     
     template <typename U>
     friend std::ostream& operator<<(std::ostream& os,Matrix<U>& m);
 
-    void allocateMeomery();
+    void allocateMemory();
 
     //Property checking functions
     bool isIdentity(Matrix<T>& A);
@@ -57,4 +57,6 @@ public:
 
 
 #endif
+
+
 

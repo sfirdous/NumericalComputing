@@ -53,12 +53,26 @@ Matrix<T>::Matrix(std::string filename)
 
         allocateMeomery();
 
-        for (int i = 0; i < 49; i++)
+        for (int i = 0; i < nRows; i++)
         {
-            for (int j = 0; j < 50; j++)
+            for (int j = 0; j < nCols; j++)
             {
                 file >> matrix[i][j];
             }
         }
     }
 }
+
+
+template <typename T>
+Matrix<T>::~Matrix()
+{
+    for (int i = 0; i < nRows; ++i)
+    {
+        delete[] matrix[i];
+    }
+
+    delete[] matrix;
+}
+
+

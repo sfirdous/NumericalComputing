@@ -26,13 +26,3 @@ void Matrix<T>::allocateMeomery()
     }
 }
 
-template <typename T>
-Matrix<T>::~Matrix()
-{
-    for (int i = 0; i < nRows; ++i)
-    {
-        delete[] matrix[i];
-    }
-
-    delete[] matrix;
-}

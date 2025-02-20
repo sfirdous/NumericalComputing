@@ -8,7 +8,7 @@ int main()
     // std::cout << m; 
     // std::cout << n;
 
-    Matrix<double> p("double_49x50.txt");
-    std::cout << p.getRow() << "\t" << p.getCol() << endl;  
+    Matrix<double> p("Matrix/matrices/double_49x50.txt");
+    std::cout << p.getRow() << "\t" << p.getCol() << std::endl;  
     std::cout << p;
 }

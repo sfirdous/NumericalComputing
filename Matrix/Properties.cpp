@@ -1,4 +1,4 @@
-#include "Matrix.h"
+#include "Matrix.hpp"
 
 template <typename T>
 bool Matrix<T>::isIdentity(Matrix<T>& A)
@@ -10,7 +10,7 @@ bool Matrix<T>::isIdentity(Matrix<T>& A)
         return false;
     for(int i = 0 ; i < rows ;++i)
     {
-        for(int j = 0; j < col;++j)
+        for(int j = 0; j < cols;++j)
         {
             T value = A.getValue(i,j);
             if(i == j && value != 1)
@@ -33,7 +33,7 @@ bool Matrix<T>::isSymmetric(Matrix<T>& A)
         return false;
     for(int i = 0 ; i < rows ;++i)
     {
-        for(int j = i+1; j < col;++j)
+        for(int j = i+1; j < cols;++j)
         {
             
             if(A.getValue(i,j) != A.getValue(j,i))

@@ -1,6 +1,3 @@
-#ifndef MATRIX_HPP
-#define MATRIX_HPP
-
 #include <iostream>
 #include <string.h>
 #include <fstream>
@@ -15,6 +12,7 @@ private:
 
 public:
     //Constructors
+    Matrix();
     Matrix(int r,int c);
     Matrix(Matrix<T>& other);
     Matrix(std::string filename);
@@ -44,6 +42,8 @@ public:
     template <typename U>
     friend std::ostream& operator<<(std::ostream& os,Matrix<U>& m);
 
+    void allocateMeomery();
+
     //Property checking functions
     bool isIdentity(Matrix<T>& A);
     bool isSymmetric(Matrix<T>& A);
@@ -52,6 +52,5 @@ public:
     ~Matrix();
 };
 
-#include "Matrix.cpp"
 
-#endif
+

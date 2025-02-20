@@ -72,3 +72,18 @@ Matrix<T> Matrix<T>::operator*(Matrix<T>& B)
 {
    return this->mul(B);
 }
+
+
+template <typename T>
+std::ostream &operator<<(std::ostream &os, Matrix<T> &m)
+{
+    for (int i = 0; i < m.getRow(); ++i)
+    {
+        for (int j = 0; j < m.getCol(); ++j)
+        {
+            os << m.getValue(i, j) << "\t";
+        }
+        os << "\n";
+    }
+    return os;
+}

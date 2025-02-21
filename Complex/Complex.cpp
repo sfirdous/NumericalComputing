@@ -12,7 +12,7 @@ Complex::Complex(double r, double i)
     this->imag = i;
 }
 
-Complex::Complex(Complex &c)
+Complex::Complex(const Complex &c)
 {
     this->real = c.getReal();
     this->imag = c.getImag();
@@ -20,12 +20,12 @@ Complex::Complex(Complex &c)
 
 
 //Method Defination
-double Complex::getReal()
+double Complex::getReal() const 
 {
     return real;
 }
 
-double Complex::getImag()
+double Complex::getImag() const 
 {
     return imag;
 }
@@ -38,21 +38,21 @@ void Complex::set(double r, double i)
 
 //Operator OverLoading Definations
 
-Complex Complex::operator+(Complex& c){
+Complex Complex::operator+(const Complex& c){
     Complex t;
     t.set(real + c.getReal(),imag + c.getImag());
     return t;
 
 }
 
-Complex Complex::operator-(Complex& c){
+Complex Complex::operator-(const Complex& c){
     Complex t;
     t.set(real + c.getReal(),imag + c.getImag());
     return t;
 
 }
 
-Complex Complex::operator*(Complex& c){
+Complex Complex::operator*(const Complex& c){
     Complex t;
     double x = (real * c.getReal()) - (imag * c.getImag());
     double y = (real * c.getImag()) + (imag * c.getReal());

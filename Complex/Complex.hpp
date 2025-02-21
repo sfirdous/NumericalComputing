@@ -2,6 +2,7 @@
 
 class Complex
 {
+
 private:
     double real, imag;
 
@@ -9,18 +10,17 @@ public:
     // Constructor Declaration
     Complex();
     Complex(double r, double i);
-    Complex(Complex &c);
+    Complex(const Complex &c);
 
     // Method Declaration
-    double getReal();
-    double getImag();
+    double getReal() const;
+    double getImag() const;
     void set(double r, double i);
 
-    //Operator OverLoading
-    Complex operator+(Complex& c);
-    Complex operator-(Complex& c);
-    Complex operator*(Complex& c);
+    // Operator OverLoading
+    Complex operator+(const Complex &c);
+    Complex operator-(const Complex &c);
+    Complex operator*(const Complex &c);
 
-    friend std::ostream& operator<<(std::ostream& os, Complex& c);
-
+    friend std::ostream &operator<<(std::ostream &os, Complex &c);
 };

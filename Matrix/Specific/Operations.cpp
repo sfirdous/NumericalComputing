@@ -2,6 +2,9 @@
 
 // Addition
 Matrix Matrix::add(const Matrix &B) const {
+    if(nRows != B.getRow() || nCols != B.getCol())
+        return;
+
     Matrix result(nRows, nCols);
     for (int i = 0; i < nRows; i++) {
         for (int j = 0; j < nCols; j++) {
@@ -13,6 +16,9 @@ Matrix Matrix::add(const Matrix &B) const {
 
 // Subtraction
 Matrix Matrix::sub(const Matrix &B) const {
+    if(nRows != B.getRow() || nCols != B.getCol())
+        return;
+
     Matrix result(nRows, nCols);
     for (int i = 0; i < nRows; i++) {
         for (int j = 0; j < nCols; j++) {
@@ -24,6 +30,9 @@ Matrix Matrix::sub(const Matrix &B) const {
 
 // Multiplication
 Matrix Matrix::mul(const Matrix &B) const {
+    if(nRows != B.getCol() || nCols != B.getRows())
+        return;
+        
     Matrix result(this->nRows, B.getCol());
     for (int i = 0; i < this->nRows; ++i) {
         for (int j = 0; j < B.getCol(); ++j) {

@@ -1,6 +1,3 @@
-#ifndef MATRIX_HPP
-#define MATRIX_HPP
-
 #include <iostream>
 #include <fstream>
 
@@ -50,5 +47,3 @@ public:
     // Friend Function
     friend std::ostream &operator<<(std::ostream &os, const Matrix &m);
 };
-
-#endif

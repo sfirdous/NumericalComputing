@@ -21,5 +21,11 @@ int main() {
     Matrix F("/workspaces/NumericalComputing/Matrix/matrices/int_49x50.txt");
     std::cout << F;
 
+    Matrix G("/workspaces/NumericalComputing/Matrix/matrices/int_49x50.txt");
+    std::cout << G;
+    
+    Matrix X = F + G;
+    std::cout << "F + G:\n" << X;
+
     return 0;
 }

@@ -1,12 +1,15 @@
-
 #include "Matrix.hpp"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
 // Default Constructor
 Matrix::Matrix() {
     cout << "Pass the dimensions of matrix as arguments" << endl;
+    nRows = 0;
+    nCols = 0;
+    matrix = nullptr;
 }
 
 // Constructor for user input
@@ -14,7 +17,6 @@ Matrix::Matrix(int r, int c) {
     setRow(r);
     setCol(c);
     allocateMemory();
-    
 }
 
 // Copy Constructor
@@ -35,33 +37,37 @@ Matrix::Matrix(std::string filename) {
     ifstream file(filename);
     if (!file) {
         cout << "Error: Cannot open file" << endl;
+        nRows = 0;
+        nCols = 0;
+        matrix = nullptr;
         return;
-    } else {
-        file >> nRows;
-        file >> nCols;
-        allocateMemory();
-
-        for (int i = 0; i < nRows; i++) {
-            for (int j = 0; j < nCols; j++) {
-                file >> matrix[i][j];
-            }
+    }
+    
+    file >> nRows >> nCols;
+    allocateMemory();
+    
+    for (int i = 0; i < nRows; i++) {
+        for (int j = 0; j < nCols; j++) {
+            file >> matrix[i][j];
         }
     }
 }
 
 // Destructor
 Matrix::~Matrix() {
-    for (int i = 0; i < nRows; ++i) {
-        delete[] matrix[i];
+    if (matrix) {
+        for (int i = 0; i < nRows; ++i) {
+            delete[] matrix[i];
+        }
+        delete[] matrix;
     }
-    delete[] matrix;
 }
 
 // Allocate memory for matrix
 void Matrix::allocateMemory() {
     matrix = new int *[nRows];
     for (int i = 0; i < nRows; ++i) {
-        matrix[i] = new int[nCols];
+        matrix[i] = new int[nCols](); // Initialize to zero
     }
 }
 
@@ -76,6 +82,10 @@ void Matrix::setValues() {
 
 // Addition
 Matrix Matrix::add(const Matrix &B) const {
+    if (nRows != B.getRow() || nCols != B.getCol()) {
+        cout << "Error: Matrix dimensions do not match for addition" << endl;
+        return Matrix();
+    }
     Matrix result(nRows, nCols);
     for (int i = 0; i < nRows; i++) {
         for (int j = 0; j < nCols; j++) {
@@ -87,6 +97,10 @@ Matrix Matrix::add(const Matrix &B) const {
 
 // Subtraction
 Matrix Matrix::sub(const Matrix &B) const {
+    if (nRows != B.getRow() || nCols != B.getCol()) {
+        cout << "Error: Matrix dimensions do not match for subtraction" << endl;
+        return Matrix();
+    }
     Matrix result(nRows, nCols);
     for (int i = 0; i < nRows; i++) {
         for (int j = 0; j < nCols; j++) {
@@ -98,11 +112,14 @@ Matrix Matrix::sub(const Matrix &B) const {
 
 // Multiplication
 Matrix Matrix::mul(const Matrix &B) const {
-    Matrix result(this->nRows, B.getCol());
-    for (int i = 0; i < this->nRows; ++i) {
+    if (nCols != B.getRow()) {
+        cout << "Error: Matrix dimensions do not match for multiplication" << endl;
+        return Matrix();
+    }
+    Matrix result(nRows, B.getCol());
+    for (int i = 0; i < nRows; ++i) {
         for (int j = 0; j < B.getCol(); ++j) {
-            result.matrix[i][j] = 0;
-            for (int k = 0; k < this->nCols; k++) {
+            for (int k = 0; k < nCols; k++) {
                 result.matrix[i][j] += this->matrix[i][k] * B.getValue(k, j);
             }
         }
@@ -130,9 +147,7 @@ bool Matrix::isIdentity() const {
 
     for (int i = 0; i < nRows; ++i) {
         for (int j = 0; j < nCols; ++j) {
-            if (i == j && matrix[i][j] != 1)
-                return false;
-            else if (i != j && matrix[i][j] != 0)
+            if ((i == j && matrix[i][j] != 1) || (i != j && matrix[i][j] != 0))
                 return false;
         }
     }

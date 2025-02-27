@@ -1,9 +1,7 @@
-#ifndef MATRIX_HPP
-#define MATRIX_HPP
 
 #include <iostream>
 #include <fstream>
-
+#include <vector>
 class Matrix {
 private:
     int nRows;
@@ -44,6 +42,9 @@ public:
     bool isIdentity() const;
     bool isSymmetric() const;
 
+    // Gaussian Elimination 
+    std::vector<double> gaussianElimination();
+
     // Destructor
     ~Matrix();
 
@@ -51,4 +52,4 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const Matrix &m);
 };
 
-#endif
+

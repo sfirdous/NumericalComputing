@@ -43,6 +43,9 @@ public:
     bool isSymmetric() const;
 
     // Gaussian Elimination 
+    void basicPivoting();
+    void forwardElimination();
+    std::vector<double> backSubstitution();
     std::vector<double> gaussianElimination();
 
     // Destructor

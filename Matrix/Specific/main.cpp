@@ -20,7 +20,7 @@ int main() {
     //     }
     
 
-    std::string filename = "D:\\NumericalComputing\\Matrix\\matrices\\augMatrix.txt";
+    std::string filename = "/workspaces/NumericalComputing/Matrix/matrices/augMatrix.txt";
 
     // Create a matrix from the file
     Matrix A(filename);

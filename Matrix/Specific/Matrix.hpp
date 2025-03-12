@@ -7,7 +7,7 @@ class Matrix
 private:
     int nRows;
     int nCols;
-    int **matrix;
+    long double **matrix;
 
 public:
     // Constructors
@@ -24,7 +24,8 @@ public:
     int getCol() const { return nCols; }
 
     void setValues();
-    int getValue(int i, int j) const { return matrix[i][j]; }
+    long double getValue(int i, int j) const { return matrix[i][j]; }
+    void setValue(int i ,int j,long double value)  {matrix[i][j] = value;}
 
     // Operations
     Matrix add(const Matrix &B) const;
@@ -50,7 +51,7 @@ public:
     std::vector<double> gaussianElimination();
 
     // LU Decomposition
-    void LUDecomposition(Matrix &L, Matrix &U)
+    void LUDecomposition(Matrix &L, Matrix &U);
 
         // Destructor
         ~Matrix();

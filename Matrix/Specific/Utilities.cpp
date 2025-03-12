@@ -2,9 +2,9 @@
 
 // Allocate memory for matrix
 void Matrix::allocateMemory() {
-    matrix = new int *[nRows];
+    matrix = new long double *[nRows];
     for (int i = 0; i < nRows; ++i) {
-        matrix[i] = new int[nCols];
+        matrix[i] = new long double[nCols];
     }
 }
 

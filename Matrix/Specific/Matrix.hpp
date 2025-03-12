@@ -2,7 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-class Matrix {
+class Matrix
+{
 private:
     int nRows;
     int nCols;
@@ -42,17 +43,18 @@ public:
     bool isIdentity() const;
     bool isSymmetric() const;
 
-    // Gaussian Elimination 
+    // Gaussian Elimination
     void basicPivoting();
     void forwardElimination();
     std::vector<double> backSubstitution();
     std::vector<double> gaussianElimination();
 
-    // Destructor
-    ~Matrix();
+    // LU Decomposition
+    void LUDecomposition(Matrix &L, Matrix &U)
+
+        // Destructor
+        ~Matrix();
 
     // Friend Function
     friend std::ostream &operator<<(std::ostream &os, const Matrix &m);
 };
-
-

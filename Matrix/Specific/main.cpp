@@ -37,14 +37,14 @@ int main() {
     //     std::cout << "x" << i + 1 << " = " << solution[i] << std::endl;
     // }
 
-    Matrix A(3, 3);
+    Matrix A(2, 2);
     
     // Manually set values for A
     
             A.setValues(); 
 
     // Create L and U matrices
-    Matrix L(3, 3), U(3, 3);
+    Matrix L(2, 3), U(2, 2);
 
     // Perform LU Decomposition
     A.LUDecomposition(L, U);

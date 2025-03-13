@@ -2,23 +2,30 @@
 #include <vector>
 
 
-void Matrix::basicPivoting() {
+bool Matrix::basicPivoting() {
     for (int i = 0; i < nRows; i++) {
         if (matrix[i][i] == 0) {
+            bool swapped = false;
             for (int k = i + 1; k < nRows; k++) {
                 if (matrix[k][i] != 0) {
-                    std::swap(matrix[i], matrix[k]); // Swap rows
+                    std::swap(matrix[i], matrix[k]); 
+                    swapped = true;
                     break;
                 }
             }
+            if (!swapped) {
+                return false; 
+            }
         }
     }
+    return true; 
 }
+
 
 void Matrix::forwardElimination() {
     for (int i = 0; i < nRows; i++) {
         for (int k = i + 1; k < nRows; k++) {
-            double factor = matrix[k][i] / matrix[i][i];
+            long double factor = matrix[k][i] / matrix[i][i];
             for (int j = i; j < nCols; j++) {
                 matrix[k][j] -= factor * matrix[i][j];
             }
@@ -38,9 +45,13 @@ std::vector<double> Matrix::backSubstitution() {
     return solution;
 }
 
-std::vector<double> Matrix::gaussianElimination() {
+std::vector<long double> Matrix::gaussianElimination() {
     Matrix tempMatrix(*this); // Copy the original matrix
-    tempMatrix.basicPivoting();
+    if(!tempMatrix.basicPivoting())
+    {
+        std::cout << "Pivoting Failed" << std::endl;
+        exit(1);
+    }
     tempMatrix.forwardElimination();
     return tempMatrix.backSubstitution();
 }

@@ -45,16 +45,18 @@ public:
     bool isSymmetric() const;
 
     // Gaussian Elimination
-    void basicPivoting();
+    bool basicPivoting();
     void forwardElimination();
     std::vector<double> backSubstitution();
     std::vector<double> gaussianElimination();
 
     // LU Decomposition
-    void LUDecomposition(Matrix &L, Matrix &U);
+    void DolittlesLUDecomposition(Matrix &L, Matrix &U);
+    void CroutsLUDecomposition(Matrix &L, Matrix &U);
+    void CholeskyDecomposition(Matrix &L);
 
-        // Destructor
-        ~Matrix();
+    // Destructor
+    ~Matrix();
 
     // Friend Function
     friend std::ostream &operator<<(std::ostream &os, const Matrix &m);

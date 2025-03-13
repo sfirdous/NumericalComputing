@@ -22,7 +22,7 @@ void Matrix::LUDecomposition(Matrix &L, Matrix &U) {
         }
     }
 
-    // Perform LU decomposition
+    
     for (int i = 0; i < nRows; i++) {
         // Compute upper triangular matrix U
         for (int k = i; k < nCols; k++) {

@@ -37,42 +37,40 @@ int main() {
     //     std::cout << "x" << i + 1 << " = " << solution[i] << std::endl;
     // }
 
-    Matrix A(2, 2);
+//     Matrix A(2, 2);
     
-    // Manually set values for A
+//     // Manually set values for A
     
-            A.setValues(); 
+//             A.setValues(); 
 
-    // Create L and U matrices
-    Matrix L(2, 3), U(2, 2);
+//     // Create L and U matrices
+//     Matrix L(2, 3), U(2, 2);
 
-    // Perform LU Decomposition
+//     // Perform LU Decomposition
+//     A.LUDecomposition(L, U);
+
+//     // Print L matrix
+//     // std::cout << "Lower Triangular Matrix L:\n";
+//     // std::cout << L << std::endl;
+    
+
+//     // // Print U matrix
+//     // std::cout << "Upper Triangular Matrix U:\n" << U << std::endl ;
+
+
+std::string filename = "/workspaces/NumericalComputing/Matrix/matrices/49X49.txt";
+
+    
+    Matrix A(filename);
+    Matrix L(A.getRow(),A.getCol()), U(A.getRow(),A.getCol());
+
     A.LUDecomposition(L, U);
 
-    // Print L matrix
-    // std::cout << "Lower Triangular Matrix L:\n";
-    // std::cout << L << std::endl;
-    
+    std::cout << "Lower Triangular Matrix L:\n";
+    std::cout << L << std::endl;
 
-    // // Print U matrix
-    // std::cout << "Upper Triangular Matrix U:\n" << U << std::endl ;
-
-    std::cout << "Lower Triangular Matrix L:" << std::endl;
-for (int i = 0; i < L.getRow(); i++) {
-    for (int j = 0; j < L.getCol(); j++) {
-        std::cout << L.getValue(i, j) << " ";
-    }
-    std::cout << std::endl;
-}
-
-std::cout << "Upper Triangular Matrix U:" << std::endl;
-for (int i = 0; i < U.getRow(); i++) {
-    for (int j = 0; j < U.getCol(); j++) {
-        std::cout << U.getValue(i, j) << " ";
-    }
-    std::cout << std::endl;
-}
- 
+     
+ std::cout << "Upper Triangular Matrix U:\n" << U << std::endl ;
 
     return 0;
 }

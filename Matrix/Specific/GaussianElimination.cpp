@@ -1,34 +1,32 @@
 #include "Matrix.hpp"
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
-// Perform Partial Pivoting (Swaps Rows if Needed)
-bool Matrix::basicPivoting() {
-    for (int i = 0; i < nRows; i++) {
-        if (matrix[i][i] == 0) { // Check if pivot is zero
-            bool swapped = false;
-            for (int k = i + 1; k < nRows; k++) {
-                if (matrix[k][i] != 0) { 
-                    swap(matrix[i], matrix[k]); // Swap entire rows
-                    swapped = true;
-                    break;
-                }
-            }
-            if (!swapped) {
-                return false; // No valid pivot found (Singular Matrix)
-            }
+// Perform Partial Pivoting to Avoid Zero Pivots
+bool Matrix::basicPivoting(int col) {
+    int maxRow = col;
+    for (int i = col + 1; i < nRows; i++) {
+        if (fabs(matrix[i][col]) > fabs(matrix[maxRow][col])) {
+            maxRow = i;
         }
+    }
+    if (fabs(matrix[maxRow][col]) < 1e-12) { // Avoid division by zero
+        return false; // Singular matrix
+    }
+    if (maxRow != col) {
+        swap(matrix[col], matrix[maxRow]); // Swap entire rows
     }
     return true;
 }
 
-// Perform Forward Elimination to Convert into Upper Triangular Form
+// Convert Matrix into Upper Triangular Form
 void Matrix::forwardElimination() {
     for (int i = 0; i < nRows - 1; i++) {
-        if (matrix[i][i] == 0) { // Avoid division by zero
-            cout << "Zero pivot encountered at row " << i << endl;
+        if (!basicPivoting(i)) { 
+            cout << "Pivoting Failed: Singular matrix detected." << endl;
             return;
         }
         for (int k = i + 1; k < nRows; k++) {
@@ -40,29 +38,25 @@ void Matrix::forwardElimination() {
     }
 }
 
-// Perform Back Substitution to Get Solution Vector
+// Solve for x using Back Substitution
 vector<long double> Matrix::backSubstitution() {
     vector<long double> solution(nRows, 0);
     for (int i = nRows - 1; i >= 0; i--) {
-        if (matrix[i][i] == 0) { // Avoid division by zero
+        if (fabs(matrix[i][i]) < 1e-12) {
             cout << "Back substitution failed: zero pivot at row " << i << endl;
             return {};
         }
-        solution[i] = matrix[i][nCols - 1]; // Start with b value
+        solution[i] = matrix[i][nCols - 1];
         for (int j = i + 1; j < nRows; j++) {
             solution[i] -= matrix[i][j] * solution[j];
         }
-        solution[i] /= matrix[i][i]; // Normalize
+        solution[i] /= matrix[i][i];
     }
     return solution;
 }
 
-// Perform Gaussian Elimination (Calls Other Functions)
+// Perform Gaussian Elimination to Solve Ax = b
 vector<long double> Matrix::gaussianElimination() {
-    if (!basicPivoting()) {
-        cout << "Pivoting Failed: Singular matrix detected." << endl;
-        return {};
-    }
     forwardElimination();
     return backSubstitution();
 }

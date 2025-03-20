@@ -36,21 +36,32 @@ Matrix::Matrix(const Matrix &other) {
 Matrix::Matrix(std::string filename) {
     ifstream file(filename);
     if (!file) {
-        cout << "Error: Cannot open file" << endl;
+        cout << "Error: Cannot open file " << filename << endl;
         nRows = 0;
         nCols = 0;
         matrix = nullptr;
         return;
     }
     
-    file >> nRows >> nCols;
-    allocateMemory();
-    
+    int rows, cols;
+    file >> rows >> cols; // Read the number of rows and columns (excluding b)
+
+    nRows = rows;
+    nCols = cols + 1; // Add one extra column for b
+
+    allocateMemory(); // Allocate memory properly
+
+    // Read matrix values from the file
     for (int i = 0; i < nRows; i++) {
         for (int j = 0; j < nCols; j++) {
-            file >> matrix[i][j];
+            if (!(file >> matrix[i][j])) { // Check if reading fails
+                cout << "Error: Insufficient data in file." << endl;
+                return;
+            }
         }
     }
+
+    file.close(); // Close the file
 }
 
 // Destructor

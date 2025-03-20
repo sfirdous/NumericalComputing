@@ -1,40 +1,36 @@
-
 #include "Matrix.hpp"
 
 void Matrix::CroutsLUDecomposition(Matrix &L, Matrix &U) {
     if (nRows != nCols) {
-        std::cout << "Matrix must be square for LU decomposition." << std::endl;
+        std::cout << "Matrix must be square for LU decomposition." <<std::endl;
         return;
     }
 
+    L = Matrix(nRows, nCols);
+    U = Matrix(nRows, nCols);
+
     for (int i = 0; i < nRows; i++) {
         for (int j = 0; j < nCols; j++) {
-            if (i == j) {
-                L.matrix[i][j] = 1.0; // L diagonal elements are 1
-            } else {
-                L.matrix[i][j] = 0.0;
-            }
-            U.matrix[i][j] = 0.0;
+            U.matrix[i][j] = (i == j) ? 1.0 : 0.0; // U diagonals are 1
+            L.matrix[i][j] = 0.0;
         }
     }
 
     for (int i = 0; i < nRows; i++) {
-        // Compute upper triangular matrix U
-        for (int k = i; k < nCols; k++) {
+        for (int j = i; j < nCols; j++) {
             long double sum = 0;
-            for (int j = 0; j < k; j++) {
-                sum += L.matrix[k][j] * U.matrix[j][i];
+            for (int k = 0; k < i; k++) {
+                sum += L.matrix[j][k] * U.matrix[k][i];
             }
-            U.matrix[k][i] = matrix[k][i] - sum;
+            L.matrix[j][i] = matrix[j][i] - sum;
         }
 
-        // Compute lower triangular matrix L
-        for (int k = i + 1; k < nRows; k++) {
+        for (int j = i + 1; j < nCols; j++) {
             long double sum = 0;
-            for (int j = 0; j < i; j++) {
-                sum += L.matrix[k][j] * U.matrix[j][i];
+            for (int k = 0; k < i; k++) {
+                sum += L.matrix[i][k] * U.matrix[k][j];
             }
-            L.matrix[k][i] = sum / U.matrix[i][i];
+            U.matrix[i][j] = (matrix[i][j] - sum) / L.matrix[i][i];
         }
     }
 }

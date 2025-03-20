@@ -2,6 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cmath>
+
+
 class Matrix
 {
 private:
@@ -42,11 +45,12 @@ public:
     void allocateMemory();
 
     // Properties
-    bool isIdentity() const;
-    bool isSymmetric() const;
+    bool isIdentity();
+    bool isSymmetric();
+    bool isDiagonallyDominant();
 
     // Gaussian Elimination
-    bool basicPivoting();
+    bool basicPivoting(int col);
     void forwardElimination();
     std::vector<long double> backSubstitution();
     std::vector<long double> gaussianElimination();
@@ -56,6 +60,8 @@ public:
     void CroutsLUDecomposition(Matrix &L, Matrix &U);
     void CholeskyLUDecomposition(Matrix &L);
 
+
+    std::vector<long double> gaussSeidel(int maxIterations, long double tolerance);
     // Destructor
     ~Matrix();
 

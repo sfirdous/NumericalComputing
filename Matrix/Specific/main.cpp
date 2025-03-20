@@ -20,28 +20,26 @@ int main() {
     //     }
     
 
-    // std::string filename = "D:\\NumericalComputing\\Matrix\\matrices\\49X50.txt";
+    std::string filename = "D:\\NumericalComputing\\Matrix\\matrices\\49X40.txt";
 
     // // Create a matrix from the file
-    // Matrix A(filename);
+    Matrix A(filename);
 
     // // Display the matrix
     // std::cout << "Matrix:\n" << A << std::endl;
 
     // // Solve using Gaussian Elimination
-    // std::vector<double> solution = A.gaussianElimination();
+    std::vector<double> solution = A.gaussianElimination();
 
     // // Display the solution
-    // std::cout << "Solution:\n";
-    // for (size_t i = 0; i < solution.size(); ++i) {
-    //     std::cout << "x" << i + 1 << " = " << solution[i] << std::endl;
-    // }
+    std::cout << "Solution:\n";
+    for (size_t i = 0; i < solution.size(); ++i) {
+        std::cout << "x" << i + 1 << " = " << solution[i] << std::endl;
+    }
 
-    Matrix A(3, 3);
+   
     
-    // Manually set values for A
-    
-            A.setValues(); 
+
 
     // Create L and U matrices
     Matrix L(3, 3), U(3, 3);

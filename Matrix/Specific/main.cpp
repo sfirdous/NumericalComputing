@@ -6,7 +6,7 @@ int main() {
   
     std::string filename = "D:\\NumericalComputing\\Matrix\\matrices\\255X255.txt";  
 
-    // Load the matrix from the file
+   
     Matrix A(filename);
 
     if (A.getRow() == 0 || A.getCol() == 0) {
@@ -14,7 +14,7 @@ int main() {
         return 1; // Exit if the matrix is invalid
     }
 
-    // Solve using Gauss-Seidel
+   
     std::vector<long double> solution = A.gaussSeidel(500, 1e-6); // 500 iterations, tolerance 1e-6
 
     // Display the solution

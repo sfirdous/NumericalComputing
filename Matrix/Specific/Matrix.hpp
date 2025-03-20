@@ -22,6 +22,7 @@ public:
 
     void setCol(int c) { this->nCols = c; }
     int getCol() const { return nCols; }
+    // vector<long double> getBColumn();
 
     void setValues();
     long double getValue(int i, int j) const { return matrix[i][j]; }
@@ -45,16 +46,18 @@ public:
     bool isSymmetric() const;
 
     // Gaussian Elimination
-    void basicPivoting();
+    bool basicPivoting();
     void forwardElimination();
-    std::vector<double> backSubstitution();
-    std::vector<double> gaussianElimination();
+    std::vector<long double> backSubstitution();
+    std::vector<long double> gaussianElimination();
 
     // LU Decomposition
-    void LUDecomposition(Matrix &L, Matrix &U);
+    void DolittlesLUDecomposition(Matrix &L, Matrix &U);
+    void CroutsLUDecomposition(Matrix &L, Matrix &U);
+    void CholeskyLUDecomposition(Matrix &L);
 
-        // Destructor
-        ~Matrix();
+    // Destructor
+    ~Matrix();
 
     // Friend Function
     friend std::ostream &operator<<(std::ostream &os, const Matrix &m);

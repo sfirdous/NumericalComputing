@@ -1,15 +1,9 @@
 #include "Matrix.hpp"
-void Matrix::LUDecomposition(Matrix &L, Matrix &U) {
+void Matrix::DolittlesLUDecomposition(Matrix &L, Matrix &U) {
     if (nRows != nCols) {
         std::cout << "Matrix must be square for LU decomposition." << std::endl;
         return;
     }
-
-    // Initialize L as identity and U as zero matrix
-    L = Matrix(nRows, nCols);
-    U = Matrix(nRows, nCols);
-    L.allocateMemory();
-    L.allocateMemory();
 
     for (int i = 0; i < nRows; i++) {
         for (int j = 0; j < nCols; j++) {
@@ -22,7 +16,7 @@ void Matrix::LUDecomposition(Matrix &L, Matrix &U) {
         }
     }
 
-    // Perform LU decomposition
+    
     for (int i = 0; i < nRows; i++) {
         // Compute upper triangular matrix U
         for (int k = i; k < nCols; k++) {
@@ -49,3 +43,5 @@ void Matrix::LUDecomposition(Matrix &L, Matrix &U) {
         }
     }
 }
+
+

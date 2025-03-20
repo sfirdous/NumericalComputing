@@ -1,7 +1,7 @@
 #include "Matrix.hpp"
 #include <cmath>
 
-void Matrix::CholeskyDecomposition(Matrix &L) {
+void Matrix::CholeskyLUDecomposition(Matrix &L) {
     if (!this->isSymmetric()) {
         std::cout << "Matrix not Symmetric" << std::endl;
         exit(1);

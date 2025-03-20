@@ -47,13 +47,13 @@ public:
     // Gaussian Elimination
     bool basicPivoting();
     void forwardElimination();
-    std::vector<double> backSubstitution();
-    std::vector<double> gaussianElimination();
+    std::vector<long double> backSubstitution();
+    std::vector<long double> gaussianElimination();
 
     // LU Decomposition
     void DolittlesLUDecomposition(Matrix &L, Matrix &U);
     void CroutsLUDecomposition(Matrix &L, Matrix &U);
-    void CholeskyDecomposition(Matrix &L);
+    void CholeskyLUDecomposition(Matrix &L);
 
     // Destructor
     ~Matrix();

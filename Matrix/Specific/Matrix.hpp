@@ -25,7 +25,7 @@ public:
 
     void setCol(int c) { this->nCols = c; }
     int getCol() const { return nCols; }
-    // vector<long double> getBColumn();
+    
 
     void setValues();
     long double getValue(int i, int j) const { return matrix[i][j]; }
@@ -61,10 +61,18 @@ public:
     void CholeskyLUDecomposition(Matrix &L);
 
 
+    //Iterative Methods
     std::vector<long double> gaussSeidel(int maxIterations, long double tolerance);
-    // Destructor
-    ~Matrix();
+    std::vector<long double> gaussJacobi(int maxIterations, long double tolerance); 
 
     // Friend Function
     friend std::ostream &operator<<(std::ostream &os, const Matrix &m);
+
+    
+    bool makeDiagonallyDominant();
+    int getDiagonallyDominantRow(int r);
+
+    // Destructor
+    ~Matrix();
+
 };

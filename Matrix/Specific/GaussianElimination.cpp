@@ -5,7 +5,6 @@
 
 using namespace std;
 
-// Perform Partial Pivoting to Avoid Zero Pivots
 bool Matrix::basicPivoting(int col) {
     int maxRow = col;
     for (int i = col + 1; i < nRows; i++) {
@@ -13,8 +12,8 @@ bool Matrix::basicPivoting(int col) {
             maxRow = i;
         }
     }
-    if (fabs(matrix[maxRow][col]) < 1e-12) { // Avoid division by zero
-        return false; // Singular matrix
+    if (fabs(matrix[maxRow][col]) < 0.000001) { 
+        return false; 
     }
     if (maxRow != col) {
         swap(matrix[col], matrix[maxRow]); // Swap entire rows
@@ -26,7 +25,7 @@ bool Matrix::basicPivoting(int col) {
 void Matrix::forwardElimination() {
     for (int i = 0; i < nRows - 1; i++) {
         if (!basicPivoting(i)) { 
-            cout << "Pivoting Failed: Singular matrix detected." << endl;
+            cout << "Pivoting Failed" << endl;
             return;
         }
         for (int k = i + 1; k < nRows; k++) {
@@ -38,11 +37,11 @@ void Matrix::forwardElimination() {
     }
 }
 
-// Solve for x using Back Substitution
+
 vector<long double> Matrix::backSubstitution() {
     vector<long double> solution(nRows, 0);
     for (int i = nRows - 1; i >= 0; i--) {
-        if (fabs(matrix[i][i]) < 1e-12) {
+        if (fabs(matrix[i][i]) < 0.000001) {
             cout << "Back substitution failed: zero pivot at row " << i << endl;
             return {};
         }

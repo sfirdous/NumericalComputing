@@ -44,20 +44,17 @@ Matrix::Matrix(std::string filename) {
     }
     
     int rows, cols;
-    file >> rows >> cols; // Read the number of rows and columns (excluding b)
+    file >> rows >> cols; // Read the number of rows and columns
 
     nRows = rows;
     nCols = cols + 1; // Add one extra column for b
 
-    allocateMemory(); // Allocate memory properly
+    allocateMemory(); 
 
     // Read matrix values from the file
     for (int i = 0; i < nRows; i++) {
         for (int j = 0; j < nCols; j++) {
-            if (!(file >> matrix[i][j])) { // Check if reading fails
-                cout << "Error: Insufficient data in file." << endl;
-                return;
-            }
+            file >> matrix[i][j];
         }
     }
 

@@ -1,13 +1,13 @@
 #include "Matrix.hpp"
 
 void Matrix::DolittlesLUDecomposition(Matrix &L, Matrix &U) {
-    if (nRows != nCols) {
+    if (nRows != nCols-1) {
         std::cout << "Matrix must be square for LU decomposition." << std::endl;
         return;
     }
 
-    L = Matrix(nRows, nCols);
-    U = Matrix(nRows, nCols);
+    // L = Matrix(nRows, nCols);
+    // U = Matrix(nRows, nCols);
 
     for (int i = 0; i < nRows; i++) {
         for (int j = 0; j < nCols; j++) {

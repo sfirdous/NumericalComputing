@@ -10,14 +10,15 @@ std::vector<long double> Matrix::gaussSeidel(int maxIterations, long double tole
     
     if (!isDiagonallyDominant()) {
         std::cout << "Matrix is not diagonally dominant\n";
-        if(!makeDiagonallyDominant())
-        {
-            std::cout << "Matrix could not be made diagonally dominant\n";
-            return{};
-        }
+        // if(!makeDiagonallyDominant())
+        // {
+        //     std::cout << "Matrix could not be made diagonally dominant\n";
+        //     return{};
+        // }
     }
 
-    for (int iter = 0; iter < maxIterations; iter++) {
+    int iter = 0;
+    while(1){
         for (int i = 0; i < nRows; i++) {
             long double sum = 0.0;
 

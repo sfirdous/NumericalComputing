@@ -50,12 +50,14 @@ public:
     bool isDiagonallyDominant();
 
     // Gaussian Elimination
-    bool basicPivoting(int col);
-    void forwardElimination();
-    std::vector<long double> backSubstitution();
+    std::vector<std::vector<long double>> rowReduction();
+    std::vector<long double> backSubstitution(std::vector<std::vector<long double>> &reducedMat);
     std::vector<long double> gaussianElimination();
 
     // LU Decomposition
+    std::vector<long double> forwardSolve();
+    std::vector<long double> backwardSolve(const std::vector<long double> &y);
+    std::vector<long double> solveLU(Matrix &L, Matrix &U);
     void DolittlesLUDecomposition(Matrix &L, Matrix &U);
     void CroutsLUDecomposition(Matrix &L, Matrix &U);
     void CholeskyLUDecomposition(Matrix &L);

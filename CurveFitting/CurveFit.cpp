@@ -12,7 +12,7 @@ CurveFit::CurveFit()
 
 CurveFit::CurveFit(int n)
 {
-    setN(n);
+    this->n = n;
     allocateMemory();
 }
 

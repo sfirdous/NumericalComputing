@@ -2,22 +2,20 @@
 using namespace std;
 long double CurveFit::lagrangesInterpolation(long double a)
 {
-    double result = 0.0;
+    long double result = 0.0;
+
     for (int i = 0; i < n; i++)
     {
-        double L_i = 0;
-        double L_i_numr = 1;
-        double L_i_denr = 1;
+        long double term = f_x_i[i];
         for (int j = 0; j < n; j++)
         {
-            if (i != j)
+            if (j != i)
             {
-                L_i_numr *= (a - x_i[j]);
-                L_i_denr *= (x_i[i] - x_i[j]);
+                term *= (a - x_i[j]) / (x_i[i] - x_i[j]);
             }
         }
-        L_i = L_i_numr / L_i_denr;
-        result += f_x_i[i] * L_i;
+        result += term;
     }
+
     return result;
 }

@@ -17,6 +17,8 @@ class CurveFit
 
   void allocateMemory();
   long double lagrangesInterpolation(long double a);
+  void linearLeastSquaresFit(long double &a, long double &b);
+
 
   ~CurveFit();
 

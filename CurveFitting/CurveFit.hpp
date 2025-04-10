@@ -18,6 +18,11 @@ class CurveFit
   void allocateMemory();
   long double lagrangesInterpolation(long double a);
   void linearLeastSquaresFit(long double &a, long double &b);
+  void powerFit(long double &a, long double &b);
+  void exponentialFit(long double &a, long double &b);
+  void CurveFit::quadraticLeastSquaresFit(long double &a, long double &b, long double &c);
+
+
 
 
   ~CurveFit();

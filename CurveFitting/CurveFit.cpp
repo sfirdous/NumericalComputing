@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 
+using namespace std;
 // Default Constructor
 CurveFit::CurveFit() {
     n = 0;

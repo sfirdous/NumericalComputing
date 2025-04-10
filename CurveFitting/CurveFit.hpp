@@ -1,3 +1,5 @@
+#ifndef CURVEFIT_HPP
+#define CURVEFIT_HPP
 #include <iostream>
 
 class CurveFit
@@ -20,7 +22,7 @@ class CurveFit
   void linearLeastSquaresFit(long double &a, long double &b);
   void powerFit(long double &a, long double &b);
   void exponentialFit(long double &a, long double &b);
-  void CurveFit::quadraticLeastSquaresFit(long double &a, long double &b, long double &c);
+  void quadraticLeastSquaresFit(long double &a, long double &b, long double &c);
 
 
 
@@ -29,3 +31,6 @@ class CurveFit
 
 
 };
+
+
+#endif

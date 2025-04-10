@@ -1,9 +1,11 @@
+#ifndef MATRIX_HPP
+#define MATRIX_HPP
 
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
 #include <cmath>
-
 
 class Matrix
 {
@@ -17,7 +19,7 @@ public:
     Matrix();
     Matrix(int r, int c);
     Matrix(const Matrix &other);
-    Matrix(std::string filename);
+    Matrix(std::string filename); // Assumes file-based initialization
 
     // Setters and Getters
     void setRow(int r) { this->nRows = r; }
@@ -25,13 +27,16 @@ public:
 
     void setCol(int c) { this->nCols = c; }
     int getCol() const { return nCols; }
-    
 
-    void setValues();
+    void setValues(); // For manual entry
     long double getValue(int i, int j) const { return matrix[i][j]; }
-    void setValue(int i ,int j,long double value)  {matrix[i][j] = value;}
+    void setValue(int i, int j, long double value) { matrix[i][j] = value; }
 
-    // Operations
+    // Memory Management
+    void allocateMemory(); // Allocates matrix with current nRows, nCols
+    ~Matrix();             // Destructor for deallocation
+
+    // Matrix Operations
     Matrix add(const Matrix &B) const;
     Matrix sub(const Matrix &B) const;
     Matrix mul(const Matrix &B) const;
@@ -41,40 +46,34 @@ public:
     Matrix operator-(const Matrix &B) const;
     Matrix operator*(const Matrix &B) const;
 
-    // Memory Management
-    void allocateMemory();
-
-    // Properties
+    // Matrix Properties
     bool isIdentity();
     bool isSymmetric();
     bool isDiagonallyDominant();
 
     // Gaussian Elimination
-    std::vector<std::vector<long double>> rowReduction();
-    std::vector<long double> backSubstitution(std::vector<std::vector<long double>> &reducedMat);
-    std::vector<long double> gaussianElimination();
+    long double** rowReduction();
+    std::vector<long double> backSubstitution(long double** reducedMat);
+    std::vector<long double> gaussianElimination();                           // Solves augmented matrix Ax = b
 
     // LU Decomposition
-    std::vector<long double> forwardSolve();
-    std::vector<long double> backwardSolve(const std::vector<long double> &y);
-    std::vector<long double> solveLU(Matrix &L, Matrix &U);
     void DolittlesLUDecomposition(Matrix &L, Matrix &U);
     void CroutsLUDecomposition(Matrix &L, Matrix &U);
     void CholeskyLUDecomposition(Matrix &L);
+    std::vector<long double> forwardSolve();                                  // For LU solvers
+    std::vector<long double> backwardSolve(const std::vector<long double> &y);
+    std::vector<long double> solveLU(Matrix &L, Matrix &U);                   // Solves LUx = b
 
-
-    //Iterative Methods
+    // Iterative Solvers
     std::vector<long double> gaussSeidel(int maxIterations, long double tolerance);
-    std::vector<long double> gaussJacobi(int maxIterations, long double tolerance); 
+    std::vector<long double> gaussJacobi(int maxIterations, long double tolerance);
 
-    // Friend Function
-    friend std::ostream &operator<<(std::ostream &os, const Matrix &m);
+    // Diagonal Dominance Tools
+    bool makeDiagonallyDominant();                                            // Tries to rearrange rows
+    int getDiagonallyDominantRow(int r);                                      // Finds better pivot row
 
-    
-    bool makeDiagonallyDominant();
-    int getDiagonallyDominantRow(int r);
-
-    // Destructor
-    ~Matrix();
-
+    // Output
+    friend std::ostream &operator<<(std::ostream &os, const Matrix &m);       // To print matrix easily
 };
+
+#endif

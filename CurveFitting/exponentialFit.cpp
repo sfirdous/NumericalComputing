@@ -1,8 +1,8 @@
 #include "CurveFit.hpp"
 #include <cmath>
 
-// Exponential Fit: f(x) = ae^(bx)
-void CurveFit::exponentialFit(long double &a, long double &b) {
+
+void CurveFit::exponentialFit() {
     long double sum_x = 0, sum_y = 0, sum_x2 = 0, sum_xy = 0;
 
     for (int i = 0; i < n; i++) {
@@ -16,8 +16,8 @@ void CurveFit::exponentialFit(long double &a, long double &b) {
     }
 
     long double denom = n * sum_x2 - sum_x * sum_x;
-    b = (n * sum_xy - sum_x * sum_y) / denom;
+    resultstruct.b = (n * sum_xy - sum_x * sum_y) / denom;
     long double A = (sum_y * sum_x2 - sum_x * sum_xy) / denom;
 
-    a = exp(A);
+    resultstruct.a = exp(A);
 }

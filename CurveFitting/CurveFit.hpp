@@ -8,6 +8,14 @@ class CurveFit
   int n;
   long double *x_i;
   long double *f_x_i;
+  
+  struct Result{
+    long double a;
+    long double b;
+    long double c;
+  };
+
+  Result resultstruct;
  
   public:
   CurveFit();
@@ -16,16 +24,17 @@ class CurveFit
 
   void setN(int n){this->n = n;}
   int getN(){return n;}
+  Result getResult(){
+    return resultstruct;
+  }
 
   void allocateMemory();
   long double lagrangesInterpolation(long double a);
-  void linearLeastSquaresFit(long double &a, long double &b);
-  void powerFit(long double &a, long double &b);
-  void exponentialFit(long double &a, long double &b);
-  void quadraticLeastSquaresFit(long double &a, long double &b, long double &c);
 
-
-
+  void linearLeastSquaresFit();
+  void powerFit();
+  void exponentialFit();
+  void quadraticLeastSquaresFit();
 
   ~CurveFit();
 

@@ -1,4 +1,7 @@
-void CurveFit::quadraticLeastSquaresFit(long double &a, long double &b, long double &c) {
+#include "CurveFit.hpp"
+#include <fstream>
+
+void CurveFit::quadraticLeastSquaresFit() {
     long double S_x = 0, S_x2 = 0, S_x3 = 0, S_x4 = 0;
     long double S_y = 0, S_xy = 0, S_x2y = 0;
 
@@ -34,7 +37,7 @@ void CurveFit::quadraticLeastSquaresFit(long double &a, long double &b, long dou
     Matrix A(filename);
 
     std::vector<long double> result = A.gaussianElimination();
-    a = result[0];
-    b = result[1];
-    c = result[2];
+    resultstruct.a = result[0];
+    resultstruct.b = result[1];
+    resultstruct.c = result[2];
 }

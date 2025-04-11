@@ -1,7 +1,7 @@
 #include "CurveFit.hpp"
 
-// Linear Least Squares Fit: f(x) = ax + b
-void CurveFit::linearLeastSquaresFit(long double &a, long double &b) {
+
+void CurveFit::linearLeastSquaresFit() {
     long double sum_x = 0, sum_y = 0, sum_xy = 0, sum_x2 = 0;
 
     for (int i = 0; i < n; i++) {
@@ -12,6 +12,6 @@ void CurveFit::linearLeastSquaresFit(long double &a, long double &b) {
     }
 
     long double denom = n * sum_x2 - sum_x * sum_x;
-    a = (n * sum_xy - sum_x * sum_y) / denom;
-    b = (sum_y * sum_x2 - sum_x * sum_xy) / denom;
+    resultstruct.a = (n * sum_xy - sum_x * sum_y) / denom;
+    resultstruct.b = (sum_y * sum_x2 - sum_x * sum_xy) / denom; 
 }

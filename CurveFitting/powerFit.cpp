@@ -1,8 +1,7 @@
 #include "CurveFit.hpp"
 #include <cmath>
 
-// Power Fit: f(x) = a * x^b
-void CurveFit::powerFit(long double &a, long double &b) {
+void CurveFit::powerFit() {
     long double sum_logx = 0, sum_logy = 0, sum_logx2 = 0, sum_logx_logy = 0;
 
     for (int i = 0; i < n; i++) {
@@ -16,8 +15,8 @@ void CurveFit::powerFit(long double &a, long double &b) {
     }
 
     long double denom = n * sum_logx2 - sum_logx * sum_logx;
-    b = (n * sum_logx_logy - sum_logx * sum_logy) / denom;
-    long double A = (sum_logy - b * sum_logx) / n;
+    resultstruct.b = (n * sum_logx_logy - sum_logx * sum_logy) / denom;
+    long double A = (sum_logy - resultstruct.b * sum_logx) / n;
 
-    a = exp(A);
+    resultstruct.a = exp(A);
 }

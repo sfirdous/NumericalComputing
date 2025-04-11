@@ -1,28 +1,40 @@
-#include "CurveFit.hpp"
-
-// Quadratic Least Squares Fit: f(x) = ax^2 + bx + c
 void CurveFit::quadraticLeastSquaresFit(long double &a, long double &b, long double &c) {
-    long double Sx = 0, Sx2 = 0, Sx3 = 0, Sx4 = 0;
-    long double Sy = 0, Sxy = 0, Sx2y = 0;
+    long double S_x = 0, S_x2 = 0, S_x3 = 0, S_x4 = 0;
+    long double S_y = 0, S_xy = 0, S_x2y = 0;
 
-    for (int i = 0; i < n; i++) {
-        long double x = x_i[i], y = f_x_i[i];
-        Sx += x;
-        Sx2 += x * x;
-        Sx3 += x * x * x;
-        Sx4 += x * x * x * x;
-        Sy += y;
-        Sxy += x * y;
-        Sx2y += x * x * y;
+    for (int i = 0; i < n; ++i) {
+        long double x = x_i[i];
+        long double y = f_x_i[i];
+        S_x += x;
+        S_x2 += x * x;
+        S_x3 += x * x * x;
+        S_x4 += x * x * x * x;
+        S_y += y;
+        S_xy += x * y;
+        S_x2y += x * x * y;
     }
 
-    // Solve system of equations using Cramer's Rule or Gaussian elimination
-    long double D = n * (Sx2 * Sx4 - Sx3 * Sx3) - Sx * (Sx * Sx4 - Sx2 * Sx3) + Sx2 * (Sx * Sx3 - Sx2 * Sx2);
-    long double Da = Sy * (Sx2 * Sx4 - Sx3 * Sx3) - Sx * (Sxy * Sx4 - Sx3 * Sx2y) + Sx2 * (Sxy * Sx3 - Sx2 * Sx2y);
-    long double Db = n * (Sxy * Sx4 - Sx3 * Sx2y) - Sy * (Sx * Sx4 - Sx2 * Sx3) + Sx2 * (Sx * Sx2y - Sxy * Sx2);
-    long double Dc = n * (Sx2 * Sx2y - Sxy * Sx3) - Sx * (Sx * Sx2y - Sxy * Sx2) + Sy * (Sx * Sx3 - Sx2 * Sx2);
 
-    a = Da / D;
-    b = Db / D;
-    c = Dc / D;
+    std::string filename = "/workspaces/NumericalComputing/CurveFitting/quad_matrix.txt";
+
+    std::ofstream fout(filename, std::ios::trunc);  
+    if (!fout) {
+        std::cerr << "Failed to open file!" << std::endl;
+        return;
+    }
+    
+    fout << 3 << " " << 3 << "\n";
+
+    fout << S_x4 << " " << S_x3 << " " << S_x2 << " " << S_x2y << "\n";
+    fout << S_x3 << " " << S_x2 << " " << S_x  << " " << S_xy  << "\n";
+    fout << S_x2 << " " << S_x  << " " << n    << " " << S_y   << "\n";
+
+    fout.close();
+
+    Matrix A(filename);
+
+    std::vector<long double> result = A.gaussianElimination();
+    a = result[0];
+    b = result[1];
+    c = result[2];
 }

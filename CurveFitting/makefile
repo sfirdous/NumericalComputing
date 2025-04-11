@@ -3,7 +3,7 @@ CCFLAGS=-c
 
 DEPS=CurveFit.hpp 
 TARGET=curve
-OBJS=main.o CurveFit.o LagrangesInterpolation.o linearLeastSquaresFit.o quadraticLeastSquaresFit.o exponentialFit.o powerFit.o
+OBJS=main.o CurveFit.o LagrangesInterpolation.o linearLeastSquaresFit.o exponentialFit.o powerFit.o  extra.o 
 
 %.o: %.cpp $(DEPS) 
 	$(CC) -o $@ $(CCFLAGS) $< 

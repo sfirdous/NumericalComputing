@@ -36,6 +36,12 @@ class CurveFit
   void exponentialFit();
   void quadraticLeastSquaresFit();
 
+
+  long double linearSplineInterpolation(long double x);
+  long double quadraticSplineInterpolation(long double x);
+
+
+
   ~CurveFit();
 
 

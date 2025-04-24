@@ -1,10 +1,10 @@
 #include "CurveFit.hpp"
-#include <fstream>
 
 void CurveFit::quadraticLeastSquaresFit() {
     long double S_x = 0, S_x2 = 0, S_x3 = 0, S_x4 = 0;
     long double S_y = 0, S_xy = 0, S_x2y = 0;
 
+    // Summing up required terms
     for (int i = 0; i < n; ++i) {
         long double x = x_i[i];
         long double y = f_x_i[i];
@@ -17,27 +17,32 @@ void CurveFit::quadraticLeastSquaresFit() {
         S_x2y += x * x * y;
     }
 
+    // Compute determinant of coefficient matrix A
+    long double detA = 
+        S_x4 * (S_x2 * n - S_x * S_x) -
+        S_x3 * (S_x3 * n - S_x * S_x2) +
+        S_x2 * (S_x3 * S_x - S_x2 * S_x2);
 
-    std::string filename = "/workspaces/NumericalComputing/CurveFitting/quad_matrix.txt";
+    // Compute determinant of matrix A2 (replace first column with constants)
+    long double detA2 = 
+        S_x2y * (S_x2 * n - S_x * S_x) -
+        S_xy  * (S_x3 * n - S_x * S_x2) +
+        S_y   * (S_x3 * S_x - S_x2 * S_x2);
 
-    std::ofstream fout(filename, std::ios::trunc);  
-    if (!fout) {
-        std::cerr << "Failed to open file!" << std::endl;
-        return;
-    }
-    
-    fout << 3 << " " << 3 << "\n";
+    // Compute determinant of matrix A1 (replace second column with constants)
+    long double detA1 = 
+        S_x4 * (S_xy * n - S_y * S_x) -
+        S_x2y * (S_x3 * n - S_x * S_x2) +
+        S_x2 * (S_x3 * S_y - S_xy * S_x2);
 
-    fout << S_x4 << " " << S_x3 << " " << S_x2 << " " << S_x2y << "\n";
-    fout << S_x3 << " " << S_x2 << " " << S_x  << " " << S_xy  << "\n";
-    fout << S_x2 << " " << S_x  << " " << n    << " " << S_y   << "\n";
+    // Compute determinant of matrix A0 (replace third column with constants)
+    long double detA0 = 
+        S_x4 * (S_x2 * S_y - S_x * S_xy) -
+        S_x3 * (S_x3 * S_y - S_x * S_x2y) +
+        S_x2 * (S_x3 * S_xy - S_x2 * S_x2y);
 
-    fout.close();
-
-    Matrix A(filename);
-
-    std::vector<long double> result = A.gaussianElimination();
-    resultstruct.a = result[0];
-    resultstruct.b = result[1];
-    resultstruct.c = result[2];
+    // Solve for a2, a1, a0 using Cramer's Rule
+    resultstruct.a = detA2 / detA;
+    resultstruct.b = detA1 / detA;
+    resultstruct.c = detA0 / detA;
 }

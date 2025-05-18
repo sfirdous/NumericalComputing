@@ -4,33 +4,13 @@
 
 using namespace std;
 
-int main() {
+int main()
+{
 
-    CurveFit cf("/workspaces/NumericalComputing/CurveFitting/data/example1.txt");
-
-    // cf.linearLeastSquaresFit();
-    // auto result = cf.getResult();
-    // cout << result.a << "\t" << result.b << endl;
-
-    // cf.quadraticLeastSquaresFit();
-    // auto qResult = cf.getResult();
-    // cout << qResult.a << "\t" << qResult.b << "\t" << endl;
-
-    // cf.exponentialFit(ae, be);
-    // auto eResult = cf.getResult();
-    // cout << eResult.a << "\t" << eResult.b << endl;
-
-    // cf.powerFit(ap, bp);
-    // auto pResult = cf.getResult();
-    // cout << pResult.a << "\t" << pResult.b << endl;
-
-    long double x = 2.5;
-
-    std::cout << "Linear spline interpolation at x = " << x << " : "
-              << cf.linearSplineInterpolation(x) << std::endl;
-
-    std::cout << "Quadratic spline interpolation at x = " << x << " : "
-              << cf.quadraticSplineInterpolation(x) << std::endl;
-
+    CurveFit cf("D:\\NumericalComputing\\CurveFitting\\data\\example1.txt");
+   
+    auto ans = cf.quadraticLeastSquaresFit();
+    cout << ans.evaluate(1) << endl;
+    
     return 0;
 }

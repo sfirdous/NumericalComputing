@@ -1,51 +1,33 @@
 #include "CurveFit.hpp"
-#include <iostream>
-#include <fstream>
 
-using namespace std;
-// Default Constructor
-CurveFit::CurveFit() {
-    n = 0;
-    x_i = nullptr;
-    f_x_i = nullptr;
-}
-
-CurveFit::CurveFit(int n)
+CurveFit::CurveFit(int size)
 {
-    this->n = n;
-    allocateMemory();
+    n = size;
+    x = std::vector<double>(n);
+    fx = std::vector<double>(n);
 }
 
+CurveFit::CurveFit(std::string filename)
+{
+    std::ifstream file(filename);
 
-CurveFit::CurveFit(string filename) {
-    ifstream file(filename);
-    if (!file) {
-        cerr << "Error opening file.\n";
-        exit(1);
+    if (!file)
+    {
+        n = 0;
+        return;
     }
 
     file >> n;
-    allocateMemory();
-
-    for (int i = 0; i < n; i++) {
-        file >> x_i[i] >> f_x_i[i];
-    }
-
+    x = std::vector<double>(n);
+    fx = std::vector<double>(n);
+    for(int i = 0 ; i < n ; ++i)
+        file >> x[i] >> fx[i];
+    
     file.close();
 }
 
-void CurveFit::allocateMemory()
-{
-    x_i = new long double[n];
-    f_x_i = new long double[n];
-}
-
-CurveFit::~CurveFit()
-{
-    if(x_i && f_x_i)
-    {
-        delete[] x_i;
-        delete[] f_x_i;
-    }
-    
+CurveFit::CurveFit(const CurveFit &other){
+ n = other.n;
+ x = other.x;
+ fx = other.fx;
 }

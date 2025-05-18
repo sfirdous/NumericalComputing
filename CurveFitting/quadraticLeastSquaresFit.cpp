@@ -1,48 +1,41 @@
 #include "CurveFit.hpp"
 
-void CurveFit::quadraticLeastSquaresFit() {
-    long double S_x = 0, S_x2 = 0, S_x3 = 0, S_x4 = 0;
-    long double S_y = 0, S_xy = 0, S_x2y = 0;
-
-    // Summing up required terms
-    for (int i = 0; i < n; ++i) {
-        long double x = x_i[i];
-        long double y = f_x_i[i];
-        S_x += x;
-        S_x2 += x * x;
-        S_x3 += x * x * x;
-        S_x4 += x * x * x * x;
-        S_y += y;
-        S_xy += x * y;
-        S_x2y += x * x * y;
+Polynomial CurveFit::quadraticLeastSquaresFit()
+{
+    double Sx4 = 0, Sx3 = 0, Sx2 = 0, Sx = 0, Sy = 0, Sxy = 0, Sx2y = 0;
+    for (int i = 0; i < n; ++i)
+    {
+        Sx4 += pow(x[i], 4);
+        Sx3 += pow(x[i], 3);
+        Sx2 += pow(x[i], 2);
+        Sx += x[i];
+        Sy += fx[i];
+        Sxy += x[i] * fx[i];
+        Sx2y += fx[i] * pow(x[i], 2);
     }
 
-    // Compute determinant of coefficient matrix A
-    long double detA = 
-        S_x4 * (S_x2 * n - S_x * S_x) -
-        S_x3 * (S_x3 * n - S_x * S_x2) +
-        S_x2 * (S_x3 * S_x - S_x2 * S_x2);
+    double DetD =
+        Sx4 * (Sx2 * n - Sx * Sx) -
+        Sx3 * (Sx3 * n - Sx2 * Sx) +
+        Sx2 * (Sx3 * Sx - Sx2 * Sx2);
+    
+    double Detd0 =
+        Sx2y * (Sx2 * n - Sx * Sx) -
+        Sxy * (Sx3 * n - Sx * Sx2) +
+        Sy * (Sx3 * Sx - Sx2 * Sx2);
+    
+    double Detd1 =
+        Sx4 * (Sxy * n - Sy * Sx) -
+        Sx2y * (Sx3 * n - Sx2 * Sx) +
+        Sx2 * (Sx3 * Sy - Sxy * Sx2);
+    
+    double Detd2 =
+        Sx4 * (Sx2 * Sy - Sx * Sxy) -
+        Sx3 * (Sx3 * Sy - Sx * Sx2y) +
+        Sx2 * (Sx3 * Sxy - Sx2 * Sx2y);
 
-    // Compute determinant of matrix A2 (replace first column with constants)
-    long double detA2 = 
-        S_x2y * (S_x2 * n - S_x * S_x) -
-        S_xy  * (S_x3 * n - S_x * S_x2) +
-        S_y   * (S_x3 * S_x - S_x2 * S_x2);
+    std::vector<double> coeff = {Detd2/DetD , Detd1/DetD, Detd0/DetD};
+    Polynomial result(coeff);
+    return result;
 
-    // Compute determinant of matrix A1 (replace second column with constants)
-    long double detA1 = 
-        S_x4 * (S_xy * n - S_y * S_x) -
-        S_x2y * (S_x3 * n - S_x * S_x2) +
-        S_x2 * (S_x3 * S_y - S_xy * S_x2);
-
-    // Compute determinant of matrix A0 (replace third column with constants)
-    long double detA0 = 
-        S_x4 * (S_x2 * S_y - S_x * S_xy) -
-        S_x3 * (S_x3 * S_y - S_x * S_x2y) +
-        S_x2 * (S_x3 * S_xy - S_x2 * S_x2y);
-
-    // Solve for a2, a1, a0 using Cramer's Rule
-    resultstruct.a = detA2 / detA;
-    resultstruct.b = detA1 / detA;
-    resultstruct.c = detA0 / detA;
 }

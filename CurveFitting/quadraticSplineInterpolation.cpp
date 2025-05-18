@@ -9,7 +9,7 @@ long double CurveFit::quadraticSplineInterpolation(long double x)
         return 0.0;
     }
 
-    std::vector<long double> a(n - 1), b(n - 1), c(n - 1), d(n - 1);
+    std::vector<long double> a(n - 1), b(n - 1), c(n - 1);
 
     //coefficients for the quadratic splines
     for (int i = 1; i < n - 1; ++i) {

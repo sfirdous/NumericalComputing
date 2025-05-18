@@ -1,51 +1,46 @@
-#ifndef CURVEFIT_HPP
-#define CURVEFIT_HPP
 #include <iostream>
+#include <vector>
+#include <fstream>
+#include "../Polynomial/Polynomial.hpp"
+#include <cmath>
 
-class CurveFit
-{
+#ifndef CURVE_FIT_HPP
+#define CURVE_FIT_HPP
+
+class CurveFit{
+
   private:
   int n;
-  long double *x_i;
-  long double *f_x_i;
-  
-  struct Result{
-    long double a;
-    long double b;
-    long double c;
-  };
+  std::vector<double> x;
+  std::vector<double> fx;
 
-  Result resultstruct;
- 
   public:
-  CurveFit();
-  CurveFit(int n);
+  //Constructors
+  CurveFit() { n = 0;}
+  CurveFit(int size);
   CurveFit(std::string filename);
+  CurveFit(std::vector<double> x_prime,std::vector<double> fx_prime) : x(x_prime) , fx(fx_prime) , n(x.size()){}
+  CurveFit(const CurveFit &other);
 
-  void setN(int n){this->n = n;}
-  int getN(){return n;}
-  Result getResult(){
-    return resultstruct;
-  }
+  //Getters
+  int getSize(){return n;}
+  std::vector<double> getX(){return x;}
+  std::vector<double> getfX(){return fx;}
 
-  void allocateMemory();
-  long double lagrangesInterpolation(long double a);
+  //Setters
+  void setSize(int n){this->n = n;}
 
-  void linearLeastSquaresFit();
-  void powerFit();
-  void exponentialFit();
-  void quadraticLeastSquaresFit();
+  //Interpolation
+  double lagrangesInterpolation(double x);
+  double linearSplineInterpolation(double a);
 
-
-  long double linearSplineInterpolation(long double x);
-  long double quadraticSplineInterpolation(long double x);
-
-
-
-  ~CurveFit();
-
-
+  //Least Sqaure
+  Polynomial linearLeastSquaresFit();
+  Polynomial quadraticLeastSquaresFit();
+  Polynomial exponentialFit();
+  Polynomial powerFit();
 };
+
 
 
 #endif

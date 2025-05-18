@@ -1,26 +1,46 @@
+#ifndef COMPLEX_HPP
+#define COMPLEX_HPP
 #include <iostream>
 
 class Complex
 {
-
 private:
-    double real, imag;
+    double real;
+    double imag;
 
 public:
-    // Constructor Declaration
+    // Constructors
     Complex();
     Complex(double r, double i);
-    Complex(const Complex &c);
+    Complex(const Complex &other);
 
-    // Method Declaration
-    double getReal() const;
-    double getImag() const;
-    void set(double r, double i);
+    // Getters
+    double getReal() { return real; }
+    double getImag() { return imag; }
 
-    // Operator OverLoading
-    Complex operator+(const Complex &c);
-    Complex operator-(const Complex &c);
-    Complex operator*(const Complex &c);
+    // Setters
+    void set(double r, double i)
+    {
+        real = r;
+        imag = i;
+    }
+    void setReal(double r) { real = r; }
+    void setImag(double i) { imag = i; }
 
-    friend std::ostream &operator<<(std::ostream &os, Complex &c);
+    // Operator Overloads
+    Complex operator+(Complex &b);
+    Complex operator-(Complex &b);
+    Complex operator*(Complex &b);
+    Complex operator=(const Complex &other);
+
+    //operation functions
+    Complex add(Complex& b);
+    Complex sub(Complex& b);
+    Complex mul(Complex& b);
+
+    // friend functions
+    friend std::ostream& operator<<(std::ostream &out, Complex &c);
+    friend std::istream& operator>>(std::istream &in, Complex &c);
 };
+
+#endif

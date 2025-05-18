@@ -1,6 +1,7 @@
 #include "Complex.hpp"
+using namespace std;
 
-//Constructor Definations
+// Constructors
 Complex::Complex()
 {
     real = imag = 0.0;
@@ -8,58 +9,66 @@ Complex::Complex()
 
 Complex::Complex(double r, double i)
 {
-    this->real = r;
-    this->imag = i;
+    real = r;
+    imag = i;
 }
 
-Complex::Complex(const Complex &c)
+
+//const added so no error occurs for rvalue (i.e temp val)
+Complex::Complex(const Complex &other)
 {
-    this->real = c.getReal();
-    this->imag = c.getImag();
+    real = other.real;
+    imag = other.imag;
 }
 
 
-//Method Defination
-double Complex::getReal() const 
+Complex Complex::add(Complex& b){return *this+b;}
+Complex Complex::sub(Complex& b){return *this-b;}
+Complex Complex::mul(Complex& b){return *this*b;}
+
+// Operator Overloads
+Complex Complex::operator+(Complex &b)
 {
-    return real;
+    Complex ans;
+    ans.set(real + b.real, imag + b.imag);
+    return ans;
 }
-
-double Complex::getImag() const 
+Complex Complex::operator-(Complex &b)
 {
-    return imag;
+    Complex ans;
+    ans.set(real - b.getReal(), imag - b.getImag());
+    return ans;
 }
-
-void Complex::set(double r, double i)
+Complex Complex::operator*(Complex &b)
 {
-    this->real = r;
-    this->imag = i;
+    Complex ans;
+    double x = real * b.getReal() + imag * b.getImag();
+    double y = imag * b.getReal() + real * b.getImag();
+    b.set(x, y);
+    return ans;
 }
 
-//Operator OverLoading Definations
-
-Complex Complex::operator+(const Complex& c){
-    Complex t;
-    t.set(real + c.getReal(),imag + c.getImag());
-    return t;
-
+Complex Complex::operator=(const Complex &other) 
+{
+    real = other.real;
+    imag = other.imag;
 }
 
-Complex Complex::operator-(const Complex& c){
-    Complex t;
-    t.set(real + c.getReal(),imag + c.getImag());
-    return t;
+// friend functions
+ostream& operator<<(ostream& out, Complex &c)
+{
+    if (c.getImag() < 0)
+        out << c.getReal() << " " << c.getImag() << "i" << endl;
 
+    out << c.getReal() << "+" << c.getImag()<< "i" << endl;
+    return out;
 }
 
-Complex Complex::operator*(const Complex& c){
-    Complex t;
-    double x = (real * c.getReal()) - (imag * c.getImag());
-    double y = (real * c.getImag()) + (imag * c.getReal());
-    t.set(x,y);
-    return t;
-}
-
-std::ostream& operator<<(std::ostream& os , Complex& c){
-    std::cout << c.getReal() << " + " << c.getImag() << "i" << std::endl;
+istream& operator>>(istream& in, Complex &c)
+{
+    cout << "Enter real part" << endl;
+    in >> c.real;
+    cout << "Enter Imag part" << endl;
+    in >> c.imag;
+    return in;
 }

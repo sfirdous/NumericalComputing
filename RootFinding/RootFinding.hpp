@@ -1,31 +1,27 @@
+#ifndef ROOTFIND_HPP
+#define ROOTFIND_HPP
+
 #include <iostream>
 #include <cmath>
-#include <iomanip>
+#include "../Polynomial/Polynomial.hpp"
 
 class RootFinding
 {
 private:
     double tol;
     double start;
-    double end;
     double step;
+    double end;
 
 public:
-    //Constructors
     RootFinding();
-    RootFinding(double tol, double start, double end, double step);
+    RootFinding(double tol, double start, double step, double end);
 
-    //Root Finding Methods
-    double newtonRaphson();
-    double fixedPointIteration();
-    double bisection(double &a, double &b);
+    double bisection(Polynomial& fx);
+    double newtonRaphson(Polynomial& fx);
+    double fixedPoint(Polynomial &fx,Polynomial& gx,double power = 1,double denom = 1.0);
 
-    //Polynomail's
-    double f(double x);
-    double df(double x);
-    double g(double x);
-
-    bool findStartingInterval(double &a, double &b);
-    double findInitialGuess();
-    
+    bool findStartingInterval(double &a, double &b,Polynomial& fx);
+    double initialGuess(Polynomial& fx);
 };
+#endif

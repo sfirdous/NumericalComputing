@@ -1,29 +1,16 @@
-#include "RootFinding.hpp"
+#include"RootFinding.hpp"
 using namespace std;
 
-double RootFinding::fixedPointIteration()
+double RootFinding::fixedPoint(Polynomial& fx,Polynomial& gx,double power,double denom)
 {
-    double x0 = findInitialGuess(); 
-    cout << fixed << setprecision(6);
-    cout << "Iter |    x        |   f(x)     \n";
-    cout << "--------------------------------------------\n";
-
-    double x_new;
-    int iter = 0;
-
-    do
-    {
-        x_new = g(x0);
-        cout << iter << "\t  "<< x_new << "\t  " << f(x_new) << endl;
-
-        iter = iter + 1;
-
+    double x0 = initialGuess(fx);
+    int iteration = 0;
+    double x_new = 0.0;
+    do{
+        x_new = pow(gx.evaluate(x0),power) / denom;
+        iteration++;
         x0 = x_new;
-
-    } while (fabs(f(x_new)) > tol);
-
-    cout << "--------------------------------------------\n";
-    cout << "Fixed Point Approximation: " << x_new << " (after " << iter << " iterations)\n";
+    }while(fabs(x_new - x0) > tol);
 
     return x_new;
 }

@@ -1,30 +1,27 @@
 #include "RootFinding.hpp"
+using namespace std;
 
-// Default Constructors
 RootFinding::RootFinding()
 {
-    tol = 0.00001;
-    start = -10;
-    end = 10;
+    tol = 1e-6;
+    start = -10.0;
     step = 0.1;
+    end = 10.0;
 }
 
-// Parametrized Constructors
-RootFinding::RootFinding(double tol, double start, double end, double step)
+RootFinding::RootFinding(double tol, double start, double step, double end)
 {
     this->tol = tol;
     this->start = start;
-    this->end = end;
     this->step = step;
+    this->end = end;
 }
 
-// Method to find starting interval for bisection
-bool RootFinding::findStartingInterval(double &a, double &b)
+bool RootFinding::findStartingInterval(double& a,double& b,Polynomial& fx)
 {
-
-    for (double x = start; x <= end; x += step)
+    for(double x = start; x <= end ; x += step)
     {
-        if (f(x) * f(x + step) < 0)
+        if(fx.evaluate(x) * fx.evaluate(x+step) < 0)
         {
             a = x;
             b = x + step;
@@ -33,35 +30,12 @@ bool RootFinding::findStartingInterval(double &a, double &b)
     }
     return false;
 }
-
-// Method for finding initial points for Newton Raphson and fixed point
-double RootFinding::findInitialGuess()
+double RootFinding::initialGuess(Polynomial& fx)
 {
-    for (double x = start; x < end; x += step)
+    for(double x = start ; x <= end ; x += step)
     {
-        if (f(x) * f(x + step) < 0)
-        {
-            return (x + x + step) / 2;
-        }
+        if(fx.evaluate(x) * fx.evaluate(x+step) < 0)
+            return (x+x+step) / 2;
     }
     return start;
 }
-
-// Polynomail
-double RootFinding::f(double x)
-{
-    return x * x  - 5*x + 5; 
-}
-
-// Derivative of Polynomial
-double RootFinding::df(double x)
-{
-    return 2* x  - 5; 
-}
-
-//
-double RootFinding::g(double x)
-{
-    return  (x*x + 5)/5;
-}
-

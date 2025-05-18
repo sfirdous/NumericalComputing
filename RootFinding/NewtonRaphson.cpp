@@ -1,44 +1,31 @@
 #include "RootFinding.hpp"
 using namespace std;
 
-double RootFinding::newtonRaphson()
+
+double RootFinding::newtonRaphson(Polynomial &fx)
 {
-    double x0 = findInitialGuess(); 
-    cout << fixed << setprecision(6); 
-    cout << "Iter |    x        |   f(x)      |   f'(x)     |   x_new     |  Diff  \n";
-    cout << "------------------------------------------------------------------------\n";
-
-    double x_new;
+    double x0 = initialGuess(fx);
     int iteration = 0;
-
+    Polynomial dfx = fx.derivative();
+    double x_new = 0.0; 
     while (true)
     {
-        double fx = f(x0);
-        double dfx = df(x0);
+        double f_x = fx.evaluate(x0);
+        double df_x = dfx.evaluate(x0);
 
-        if (fabs(dfx) < tol)
-        { 
+        if (df_x < tol)
+        {
             cout << "Derivative too small. Method failed.\n";
             return -1.0;
         }
 
-        x_new = x0 - (fx / dfx);        
-        double diff = fabs(x_new - x0); 
-
-        cout << iteration + 1 << "    | " << x0 << "  | " << fx << "  | "
-             << dfx << "  | " << x_new << "  | " << diff << "\n";
-
-        if (diff < tol)
-        { 
+        x_new = x0 - (f_x / df_x);
+        if((x_new - x0)  < tol)
             break;
-        }
-
-        x0 = x_new;
+        
+        x_new = x0;
         iteration++;
     }
-
-    cout << "------------------------------------------------------------------------\n";
-    cout << "Newton Raphson Root Approximation: " << x_new << " (after " << iteration + 1 << " iterations)\n";
 
     return x_new;
 }

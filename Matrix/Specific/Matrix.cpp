@@ -1,75 +1,127 @@
 #include "Matrix.hpp"
-#include <iostream>
-#include <fstream>
-
 using namespace std;
 
-// Default Constructor
-Matrix::Matrix() {
-    cout << "Pass the dimensions of matrix as arguments" << endl;
+// Constructor Definations
+Matrix::Matrix()
+{
     nRows = 0;
     nCols = 0;
     matrix = nullptr;
 }
 
-// Constructor for user input
-Matrix::Matrix(int r, int c) {
-    setRow(r);
-    setCol(c);
+Matrix::Matrix(int r, int c)
+{
+    nRows = r;
+    nCols = c;
     allocateMemory();
 }
 
-// Copy Constructor
-Matrix::Matrix(const Matrix &other) {
-    setRow(other.getRow());
-    setCol(other.getCol());
+Matrix::Matrix(int r,int c,long double value)
+{
+    nRows = r;
+    nCols = c;
     allocateMemory();
 
-    for (int i = 0; i < nRows; ++i) {
-        for (int j = 0; j < nCols; ++j) {
+    for (int i = 0; i < nRows; i++)
+    {
+        for (int j = 0; j < nCols; j++)
+        {
+            matrix[i][j] = value;
+        }
+    }
+}
+
+Matrix::Matrix(const Matrix &other)
+{
+    nRows = other.nRows;
+    nCols = other.nCols;
+    allocateMemory();
+    for (int i = 0; i < nRows; ++i)
+    {
+        for (int j = 0; j < nCols; ++j)
+        {
             matrix[i][j] = other.matrix[i][j];
         }
     }
 }
 
-// Constructor to read from file
-Matrix::Matrix(std::string filename) {
+Matrix::Matrix(string filename)
+{
+
     ifstream file(filename);
-    if (!file) {
-        cout << "Error: Cannot open file " << filename << endl;
+
+    if (!file)
+    {
         nRows = 0;
         nCols = 0;
         matrix = nullptr;
         return;
     }
-    
-    int rows, cols;
-    file >> rows >> cols; // Read the number of rows and columns
+    file >> nRows;
+    file >> nCols;
+    nCols = nCols + 1;
 
-    nRows = rows;
-    nCols = cols + 1; // Add one extra column for b
+    allocateMemory();
 
-    allocateMemory(); 
-
-    // Read matrix values from the file
-    for (int i = 0; i < nRows; i++) {
-        for (int j = 0; j < nCols; j++) {
+    for (int i = 0; i < nRows; ++i)
+    {
+        for (int j = 0; j < nCols; ++j)
             file >> matrix[i][j];
-        }
     }
 
-    file.close(); // Close the file
+    file.close();
+}
+
+// Set Values of matrix
+void Matrix::setValues()
+{
+    for (int i = 0; i < nRows; i++)
+    {
+        for (int j = 0; j < nCols; j++)
+        {
+            cin >> matrix[i][j];
+        }
+    }
+}
+// Memory Allocator function
+void Matrix::allocateMemory()
+{
+    // array of pointers
+    matrix = new long double *[nRows];
+
+    // each pointer points to a row having nCols
+    for (int i = 0; i < nRows; ++i)
+    {
+        matrix[i] = new long double[nCols];
+    }
+}
+
+void Matrix::swapRows(int r,int index)
+{
+    long double *temp = matrix[r];
+    matrix[r] = matrix[index];
+    matrix[index] = temp;
+}
+
+// friend functions
+ostream &operator<<(std::ostream &out, Matrix &M)
+{
+    for (int i = 0; i < M.getNRow(); ++i)
+    {
+        for (int j = 0; j < M.getNCol(); ++j)
+            out << M.getValue(i, j) << " ";
+        out << "\n";
+    }
+    return out;
 }
 
 // Destructor
-Matrix::~Matrix() {
-    if (matrix) {
-        for (int i = 0; i < nRows; ++i) {
+Matrix::~Matrix()
+{
+    if (matrix)
+    {
+        for (int i = 0; i < nRows; i++)
             delete[] matrix[i];
-        }
-        delete[] matrix;
     }
+    delete[] matrix;
 }
-
-
-

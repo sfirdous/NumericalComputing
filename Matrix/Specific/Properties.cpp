@@ -31,19 +31,4 @@ bool Matrix::isSymmetric() {
 }
 
 
-bool Matrix::isDiagonallyDominant()  {
-    for (int i = 0; i < nRows; i++) {
-        long double sum = 0;
-        for (int j = 0; j < nCols - 1; j++) // Exclude last column
-        {  
-            if (i != j) {
-                sum += std::fabs(matrix[i][j]);
-            }
-        }
-        if (std::fabs(matrix[i][i]) < sum) {
-            return false; // Not diagonally dominant
-        }
-    }
-    return true;
-}
 

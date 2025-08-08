@@ -25,9 +25,9 @@ NUMERICALCOMPUTING/
 │ ├── Complex.hpp
 │ ├── main.cpp
 │ └── Makefile
-├── CurveFitting/
-│ ├── CurveFit.cpp
-│ ├── CurveFit.hpp
+├── Interpolation/
+│ ├── Interpolation.cpp
+│ ├── Interpolation.hpp
 │ ├── exponentialFit.cpp
 │ ├── LagrangeInterpolation.cpp
 │ ├── linearLeastSquaresFit.cpp
@@ -76,7 +76,7 @@ NUMERICALCOMPUTING/
 ## Features
 
 - **Complex Number Arithmetic:** Basic complex operations implemented in `Complex/`.
-- **Curve Fitting:** Linear, quadratic, power, exponential fits, and spline/Lagrange interpolation in `CurveFitting/`.
+- **Curve Fitting:** Linear, quadratic, power, exponential fits, and spline/Lagrange interpolation in `Interpolation/`.
 - **Matrix Computations:**
   - LU decompositions (Crout, Doolittle, Cholesky)
   - Matrix properties and operations
@@ -93,16 +93,16 @@ cd Complex
 make
 ./ComplexExecutable # example executable name
 
-cd ../CurveFitting
+cd ../Interpolation
 make
-./CurveFittingExecutable
+./InterpolationExecutable
 ```
 
 
 ## Usage
 
 - Each module’s `main.cpp` provides usage examples and test cases.
-- Modify or add data files in the `CurveFitting/data/` directory if needed.
+- Modify or add data files in the `Interpolation/data/` directory if needed.
 - Run compiled executables to test functionalities.
 
 ## Dependencies

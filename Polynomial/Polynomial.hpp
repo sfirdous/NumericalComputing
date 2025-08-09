@@ -8,10 +8,13 @@ class Polynomial
 {
     private:
         std::vector<double> coefficients;
+        int size;
     public:
-        Polynomial(std::vector<double>& coeffs) : coefficients(coeffs) {} 
+        Polynomial(std::vector<double>& coeffs) : coefficients(coeffs),size(coeffs.size()) {} 
         double evaluate(double x);
         Polynomial derivative();
+        Polynomial add(Polynomial &other);
+        void print(); 
 
 };
 

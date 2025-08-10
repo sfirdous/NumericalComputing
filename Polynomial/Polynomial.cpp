@@ -18,16 +18,15 @@ Polynomial Polynomial::derivative()
 
 Polynomial Polynomial::add(Polynomial &other)
 {
-    std::vector<double> result;
-    if(other.size > size)
-            coefficients.resize(size + other.size - 1,0);
-    else
-            other.coefficients.resize(size + size - 1,0);
+    int max_size = std::max(size,other.size);
+    std::vector<double> result(max_size,0.0);
 
     for(int i = 0 ; i < size ; ++i)
-        result[i] = coefficients[i] + other.coefficients[i];
+        result[i] += coefficients[i];
+    for(int i = 0 ; i < other.size ; ++i)
+        result[i] += other.coefficients[i];
     
-    return result;
+    return Polynomial(result);
 }
 
 void Polynomial::print()

@@ -14,6 +14,7 @@ class Polynomial
         double evaluate(double x);
         Polynomial derivative();
         Polynomial add(Polynomial &other);
+        Polynomial mul(Polynomial &other);
         void print(); 
 
 };

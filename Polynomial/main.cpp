@@ -5,9 +5,11 @@ using namespace std;
 int main()
 {
 
-    vector<double> poly = {1,1,1,1};
+    vector<double> poly = {2,-1,1};
     Polynomial p(poly);
-    Polynomial ans = p.add(p);
+    vector<double> poly1 = {2,1};
+    Polynomial p1(poly1);
+    Polynomial ans = p.add(p1);
     ans.print();
     
 

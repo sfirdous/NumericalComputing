@@ -29,6 +29,31 @@ Polynomial Polynomial::add(Polynomial &other)
     return Polynomial(result);
 }
 
+Polynomial Polynomial::mul(Polynomial &other)
+{
+    std::vector<double> result(size+other.size,0.0);
+    int s_size,l_size;
+
+    const std::vector<double> *outer,*inner;
+    //decide the outer and inner loop based on the size of the polynomials
+    if(size >= other.size)
+    {
+        outer = &other.coefficients;
+        inner = &coefficients;        
+    }else{
+        outer = &coefficients;
+        inner = &other.coefficients;
+    
+    }
+
+    for(int i = 0 ; i < outer->size() ; ++i)
+        for(int j = 0 ; j < inner->size() ; ++j)
+                result[i+j] += (*outer)[i] + (*inner)[j];
+
+    return Polynomial(result);
+}
+
+
 void Polynomial::print()
 {
     std::cout << coefficients[0] << " " ; // print the first coefficient

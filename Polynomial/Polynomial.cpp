@@ -32,7 +32,6 @@ Polynomial Polynomial::add(Polynomial &other)
 Polynomial Polynomial::mul(Polynomial &other)
 {
     std::vector<double> result(size+other.size,0.0);
-    int s_size,l_size;
 
     const std::vector<double> *outer,*inner;
     //decide the outer and inner loop based on the size of the polynomials
@@ -46,9 +45,13 @@ Polynomial Polynomial::mul(Polynomial &other)
     
     }
 
+    std::cout << (*outer)[0] << std::endl;
+    std::cout << (*inner)[0] << std::endl;
+
     for(int i = 0 ; i < outer->size() ; ++i)
         for(int j = 0 ; j < inner->size() ; ++j)
-                result[i+j] += (*outer)[i] + (*inner)[j];
+            result[i+j] += (*outer)[i] * (*inner)[j];
+                
 
     return Polynomial(result);
 }
@@ -57,6 +60,8 @@ Polynomial Polynomial::mul(Polynomial &other)
 void Polynomial::print()
 {
     std::cout << coefficients[0] << " " ; // print the first coefficient
-    for(int i = 1 ; i < size ; ++i)
-        std::cout << coefficients[i] << "x^" << i << " ";
+    coefficients[1] == 0 ? std::cout << "" : std::cout << coefficients[1] << "x ";
+    for(int i = 2 ; i < size ; ++i)
+        if(coefficients[i] != 0)
+            std::cout << coefficients[i] << "x^" << i << " ";
 }

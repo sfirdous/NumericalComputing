@@ -9,7 +9,7 @@ int main()
     Polynomial p(poly);
     vector<double> poly1 = {2,1};
     Polynomial p1(poly1);
-    Polynomial ans = p.add(p1);
+    Polynomial ans = p.mul(p1);
     ans.print();
     
 

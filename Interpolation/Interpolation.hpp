@@ -13,6 +13,7 @@ class Interpolation{
   int n;
   std::vector<double> x;
   std::vector<double> fx;
+  std::vector<Polynomial> P;
 
   public:
   //Constructors
@@ -39,6 +40,9 @@ class Interpolation{
   Polynomial quadraticLeastSquaresFit();
   Polynomial exponentialFit();
   Polynomial powerFit();
+
+  //
+  void calculateFallingFactorial();
 };
 
 

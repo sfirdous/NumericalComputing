@@ -1,1 +1,1 @@
-from .interpolation import PolynomialInterpolation
+from .interpolation import PolynomialInterpolation,DifferentialInterpolation

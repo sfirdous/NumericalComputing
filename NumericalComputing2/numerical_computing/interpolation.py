@@ -1,3 +1,5 @@
+import math
+
 class Interpolation:
     def __init__(self,x,y):
         self._x = x
@@ -82,7 +84,46 @@ class PolynomialInterpolation(Interpolation):
             result += term
         return result
         
+class DifferentialInterpolation(Interpolation):
+    def __init__(self,x,y):
+        super().__init__(x,y)
     
+    @classmethod
+    def from_n(cls, n):
+        return super().from_n(n)
+    
+    @classmethod
+    def from_file(cls, filename):
+        return super().from_file(filename)
+    
+    def newton_forward(self):
+        h = (self._x[1] - self._x[0])
+        print(h)
+        forward_val = self.cal_diff_table(True)
+
+        sum = 0 
+        for i in range(0,len(forward_val)):
+            if(i%2):
+                sum += forward_val[i] / math.factorial(i+1)
+            else:
+                sum -= forward_val[i] / math.factorial(i+1)
+
+        return sum / h 
+
+    
+    def newton_backward(self):
+        h = (self._x[1] - self._x[0])
+        print(h)
+        backward_val = self.cal_diff_table(False)
+
+        sum = 0 
+        for i in range(0,len(backward_val )):
+            sum += backward_val [i] / math.factorial(i+1)
+
+        return sum / h 
+  
+
+
     
     
     

@@ -4,10 +4,10 @@ class Interpolation:
     def __init__(self,x,y):
         self._x = x
         self._y = y
-        self._n = len(x)
+        self._N = len(x)
     
     @classmethod
-    def from_n(cls,n):
+    def from_N(cls,n):
         x = [0] * n
         y = [0]  * n
         for i in range(0,n):
@@ -32,7 +32,7 @@ class Interpolation:
     def __del__(self):
         del self._x
         del self._y
-        del self._n
+        del self._N
     
 class PolynomialInterpolation(Interpolation):
     
@@ -40,35 +40,35 @@ class PolynomialInterpolation(Interpolation):
         super().__init__(x,y)
     
     @classmethod
-    def from_n(cls, n):
-        return super().from_n(n)
+    def from_N(cls, n):
+        return super().from_N(n)
     
     @classmethod
     def from_file(cls, filename):
         return super().from_file(filename)
     
-    def cal_diff_table_norm(self,forward = True):
+    def cal_diff_table_Norm(self,forward = True):
         y = {}                            # dict to store deltas
         forward_val = []                  # list that contains forward values
         backward_val = []                 # list that contains backward values
          
         y['y0'] = self._y                 # y0 = y
         
-        for i in range(1,self._n):        
-            y[f'y{i}'] = [0] * (self._n - i)                                                          # add key yi in dict with size n-i
+        for i in range(1,self._N):        
+            y[f'y{i}'] = [0] * (self._N - i)                                                          # add key yi in dict with size n-i
             
-            for j in range(self._n - i):
+            for j in range(self._N - i):
                 y[f'y{i}'][j] = (y[f'y{i-1}'][j+1] - y[f'y{i-1}'][j]) / (self._x[i+j] - self._x[j])   # calculate the jth entry for yi
                 
             forward_val.append(y[f'y{i}'][0])                                                         # add first value of yi to forward_val
-            backward_val.append(y[f'y{i}'][self._n-i-1])                                              # add last value of yi to backward_val
+            backward_val.append(y[f'y{i}'][self._N-i-1])                                              # add last value of yi to backward_val
                 
         return forward_val if forward else backward_val                                               # return forward or backward values based on the forward parameter
     
     
 
     def newton_interpolation(self,x):
-        forward_val = self.cal_diff_table_norm(True)
+        forward_val = self.cal_diff_table_Norm(True)
         
         result = self._y[0]
         
@@ -82,9 +82,9 @@ class PolynomialInterpolation(Interpolation):
     
     def lagrange_interpolation(self,x):
         result = 0
-        for i in range(0,self._n):
+        for i in range(0,self._N):
             term = self._y[i]
-            for j in range(0,self._n):
+            for j in range(0,self._N):
                 if(i!=j):
                     term *= (x  - self._x[j]) / (self._x[i] - self._x[j])
             result += term
@@ -98,28 +98,28 @@ class DifferentialInterpolation(Interpolation):
         super().__init__(x,y)
     
     @classmethod
-    def from_n(cls, n):
-        return super().from_n(n)
+    def from_N(cls, n):
+        return super().from_N(n)
     
     @classmethod
     def from_file(cls, filename):
         return super().from_file(filename)
     
     def cal_diff_table(self,forward = True):
-        y = {}                            # dict to store deltas
-        forward_val = []                  # list that contains forward values
-        backward_val = []                 # list that contains backward values
+        y = {}                                                                                        # dict to store deltas
+        forward_val = []                                                                              # list that contains forward values
+        backward_val = []                                                                             # list that contains backward values
          
-        y['y0'] = self._y                 # y0 = y
+        y['y0'] = self._y                                                                             # y0 = y
         
-        for i in range(1,self._n):        
-            y[f'y{i}'] = [0] * (self._n - i)                                                          # add key yi in dict with size n-i
+        for i in range(1,self._N):        
+            y[f'y{i}'] = [0] * (self._N - i)                                                          # add key yi in dict with size n-i
             
-            for j in range(self._n - i):
-                y[f'y{i}'][j] = (y[f'y{i-1}'][j+1] - y[f'y{i-1}'][j])   # calculate the jth entry for yi
+            for j in range(self._N - i):
+                y[f'y{i}'][j] = (y[f'y{i-1}'][j+1] - y[f'y{i-1}'][j])                                 # calculate the jth entry for yi
                 
             forward_val.append(y[f'y{i}'][0])                                                         # add first value of yi to forward_val
-            backward_val.append(y[f'y{i}'][self._n-i-1])                                              # add last value of yi to backward_val
+            backward_val.append(y[f'y{i}'][self._N-i-1])                                              # add last value of yi to backward_val
                 
         return forward_val if forward else backward_val  
     
@@ -149,10 +149,50 @@ class DifferentialInterpolation(Interpolation):
 
         return sum / h 
     
-    def sterling(self):
-        index = math.floor(self._n / 2)
-        print(index)
+    def P(self,n,u):
+        sum = 0
+        for j in range(1,n):
+            term = 1
+            for k in range(0,n+1):
+                term *= (u-k)
+            sum += term
+        return sum / math.factorial(n)
     
+    def P_back(self,n,u):
+        sum = 0
+        for j in range(1,n):
+            term = 1
+            for k in range(0,n+1):
+                term *= (u+k)
+            sum += term
+        return sum / math.factorial(n)
+
+    def newton_forward_div_diff(self,x):
+        h = self._x[1] - self._x[0]
+        u = (x - self._x[0]) / h
+        
+        
+        forward_val = self.cal_diff_table(True)
+        result = forward_val[0]
+        
+        for i in range (1,self._N - 1):
+            result +=   self.P(i,u) * forward_val[i]
+            
+        return result / h
+
+    def newton_backward_div_diff(self,x):
+        h = self._x[1] - self._x[0]
+        u = ( x - self._x[self._N-1] ) / h
+        
+
+        backward_val = self.cal_diff_table(False)
+        result = backward_val[0]
+
+        for i in range (1,self._N - 1):
+            result +=   self.P_back(i,u) * backward_val[i]
+            
+        return result / h
+            
     def __del__(self):
         super().__del__()
     

@@ -1,4 +1,5 @@
 from numerical_computing import PolynomialInterpolation,DifferentialInterpolation
+from numerical_computing import Integration
 
 # obj = PolynomialInterpolation.from_N(5)
 # print(obj._x)
@@ -19,8 +20,13 @@ from numerical_computing import PolynomialInterpolation,DifferentialInterpolatio
 # print(len(obj2.cal_diff_table()))
 # print(obj2._N)
 
-obj3 = DifferentialInterpolation.from_file('D:/NumericalComputing/NumericalComputing2/data/newtondivdiffback.txt')
-print(obj3.newton_forward_div_diff(1.5))
+# obj3 = DifferentialInterpolation.from_file('D:/NumericalComputing/NumericalComputing2/data/newtondivdiffback.txt')
+# print(obj3.newton_forward_div_diff(1.5))
 
+# obj4 = DifferentialInterpolation.from_file('D:/NumericalComputing/NumericalComputing2/data/sterling.txt')
+# print(obj4.gauss_seterling())
+
+obj5 = Integration.from_file('D:/NumericalComputing/NumericalComputing2/data/integration.txt')
+print(obj5.simpson1_3())
 
 

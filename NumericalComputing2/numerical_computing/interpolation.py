@@ -1,6 +1,6 @@
 import math
 
-class Interpolation:
+class Interpolation():
     def __init__(self,x,y):
         self._x = x
         self._y = y
@@ -105,7 +105,7 @@ class DifferentialInterpolation(Interpolation):
     def from_file(cls, filename):
         return super().from_file(filename)
     
-    def cal_diff_table(self,forward = True):
+    def cal_diff_table(self):
         y = {}                                                                                        # dict to store deltas
         forward_val = []                                                                              # list that contains forward values
         backward_val = []                                                                             # list that contains backward values
@@ -121,12 +121,13 @@ class DifferentialInterpolation(Interpolation):
             forward_val.append(y[f'y{i}'][0])                                                         # add first value of yi to forward_val
             backward_val.append(y[f'y{i}'][self._N-i-1])                                              # add last value of yi to backward_val
                 
-        return forward_val if forward else backward_val  
+        return forward_val , backward_val,y 
+
     
     def newton_forward(self):
         h = (self._x[1] - self._x[0])
 
-        forward_val = self.cal_diff_table(True) 
+        forward_val = self.cal_diff_table()[0] 
 
         sum = 0 
         for i in range(0,len(forward_val)):
@@ -141,7 +142,7 @@ class DifferentialInterpolation(Interpolation):
     def newton_backward(self):
         h = (self._x[1] - self._x[0])
 
-        backward_val = self.cal_diff_table(False)
+        backward_val = self.cal_diff_table()[1]
 
         sum = 0 
         for i in range(0,len(backward_val )):
@@ -149,30 +150,25 @@ class DifferentialInterpolation(Interpolation):
 
         return sum / h 
     
-    def P(self,n,u):
-        sum = 0
+    def P(self,n,u,forward = True):
+        sum_f = 0
+        sum_b = 0
         for j in range(1,n):
-            term = 1
+            term_f = term_b = 1
             for k in range(0,n+1):
-                term *= (u-k)
-            sum += term
-        return sum / math.factorial(n)
+                term_f *= (u-k)
+                term_b *= (u+k)
+            sum_f += term_f
+            sum_b += term_b
+        return (sum_f if forward else sum_b) / math.factorial(n) 
     
-    def P_back(self,n,u):
-        sum = 0
-        for j in range(1,n):
-            term = 1
-            for k in range(0,n+1):
-                term *= (u+k)
-            sum += term
-        return sum / math.factorial(n)
 
     def newton_forward_div_diff(self,x):
         h = self._x[1] - self._x[0]
         u = (x - self._x[0]) / h
         
         
-        forward_val = self.cal_diff_table(True)
+        forward_val = self.cal_diff_table()[0]
         result = forward_val[0]
         
         for i in range (1,self._N - 1):
@@ -185,14 +181,35 @@ class DifferentialInterpolation(Interpolation):
         u = ( x - self._x[self._N-1] ) / h
         
 
-        backward_val = self.cal_diff_table(False)
+        backward_val = self.cal_diff_table()[1]
         result = backward_val[0]
 
         for i in range (1,self._N - 1):
-            result +=   self.P_back(i,u) * backward_val[i]
+            result +=   self.P(i,u,False) * backward_val[i]
             
         return result / h
-            
+    
+    def gauss_seterling(self):
+        h = self._x[1] - self._x[0]
+        
+        mid = self._N // 2
+        
+        derivative = 0                          
+        
+        factorial = 1
+        sign = 1
+        forward_val,backward_val,y= self.cal_diff_table()
+        
+        for i in range(1,self._N,2):
+            factorial *= i if i > 1 else 1
+            diff_avg = (forward_val[i-1] + backward_val[i-1]) / 2
+            term = (sign * diff_avg) / (factorial*h)
+            derivative += term
+            sign *= -1
+                
+        return derivative
+        
+           
     def __del__(self):
         super().__del__()
     

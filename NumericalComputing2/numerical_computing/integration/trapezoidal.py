@@ -11,7 +11,7 @@ class Trapezoidal(Integration):
         return super().from_file(filename)
     
     @classmethod
-    def from_function(cls,function,a,b,error_bound=1/600,n=None,h=None):
+    def from_function(cls,function,a,b,error_bound=1/600):
         x = symbols('x')
         expr = sympify(function)
         
@@ -27,21 +27,21 @@ class Trapezoidal(Integration):
         
         n = int((b-a) / h)
         # print(n)
-        x_ = y_ = np.empty(n,dtype = float)
-        for i,idx in enumerate(np.arange(a,b,h)):
-            x_[i] = idx
+        x_ = np.linspace(a,b,n+1)
+        y_ = np.empty(len(x_),dtype=float)
+        for i,idx in enumerate(x_):
             y_[i] = eval(function,{"x": idx})
+        
         return cls(x_,y_)
             
         
-    # def calculate_h(self,accuracy=)
     def trapezoidal(self):
-        integration = self.__y[0] + self.__y[self.__N-1]
+        integration = self._y[0] + self._y[self._N-1]
+    
+        for i in range(1,self._N-1):
+            integration += 2*self._y[i]
         
-        for i in range(1,self.__N-1):
-            integration += 2*self.__y[i]
-        
-        return integration * (self.__h / 2)
+        return integration * (self._h / 2)
     
     
     def __del__(self):

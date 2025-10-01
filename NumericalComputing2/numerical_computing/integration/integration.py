@@ -2,12 +2,14 @@ from abc import ABC
 
 class Integration():
     def __init__(self,x,y):
-        self.__x = x
-        self.__y = y
-        self.__N = len(x)
-        self.__a = self.__x[0]
-        self.__b = self.__x[self.__N-1]
-        self.__h = (self.__b - self.__a) / (self.__N-1)
+        self._x = x
+        self._y = y
+        self._N = len(x)
+        self._a = self._x[0]
+        self._b = self._x[self._N-1]
+        self._h = (self._b - self._a) / (self._N-1)
+        print(self._x)
+        print(self._y)
      
     @classmethod
     def from_file(cls,filename):
@@ -50,11 +52,11 @@ class Integration():
         return integration * (self.__h/3)
     
     def __del__(self):
-        del self.__x
-        del self.__y
-        del self.__N
-        del self.__a
-        del self.__b
+        del self._x
+        del self._y
+        del self._N
+        del self._a
+        del self._b
             
         
 

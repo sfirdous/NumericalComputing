@@ -1,6 +1,6 @@
 from abc import ABC
 
-class Integration():
+class Integration(ABC):
     def __init__(self,x,y):
         self._x = x
         self._y = y
@@ -25,9 +25,8 @@ class Integration():
         return cls(x,y)
     
     @classmethod
-    def from_function(cls,function,a,b,accuracy):
+    def from_function(cls,function,a,b,error_bound):
         pass 
-        
     
     def simpson3_8(self):
         integration = self.__y[0] + self.__y[self.__N-1]
@@ -40,16 +39,6 @@ class Integration():
 
         return integration * ((3*self.__h)/8)
     
-    def simpson1_3(self):
-        integration = self.__y[0] + self.__y[self.__N-1]
-
-        for i in range(1,self.__N-1):
-            if(i%2 == 1):
-                integration += 4*self.__y[i]
-            else:
-                integration += 2*self.__y[i]
-        
-        return integration * (self.__h/3)
     
     def __del__(self):
         del self._x

@@ -2,7 +2,7 @@ from numerical_computing import PolynomialInterpolation,DifferentialInterpolatio
 from numerical_computing import Trapezoidal,Simpsons,ODES
 import numpy as np
 import math
-from matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 # obj = PolynomialInterpolation.from_N(5)
 # print(obj._x)
@@ -31,40 +31,70 @@ from matplotlib.pyplot as plt
 
 
 
-obj6 = Trapezoidal.from_function("1/(1+x)",0,1)
-print(obj6.trapezoidal())
+# obj6 = Trapezoidal.from_function("1/(1+x)",0,1)
+# print(obj6.trapezoidal())
 
-obj7 = Simpsons.from_function("1/(1+x)",0,1)
-print(obj7.simpson1_3())
+# obj7 = Simpsons.from_function("1/(1+x)",0,1)
+# print(obj7.simpson1_3())
 
-obj8 = Simpsons.from_function("1/(1+x)",0,1,one=False)
-print(obj8.simpson3_8())
+# obj8 = Simpsons.from_function("1/(1+x)",0,1,one=False)
+# print(obj8.simpson3_8())
 
-ivp = ODES("-2*y+math.exp(-x)",1,0.5,0,2)
-ivp.euler()
-print(ivp.y)
+# ivp = ODES("-2*y+math.exp(-x)",1,0.5,0,2)
+# ivp.euler()
+# print(ivp.y)
 
-ivp.mod_euler()
-print(ivp.y)
+# ivp.mod_euler()
+# print(ivp.y)
 
-ivp.runge_kutta4()
-print(ivp.y)
+# ivp.runge_kutta4()
+# print(ivp.y)
 
 def plot_h_vs_error():
     h = np.float32(1)
     a = 0
     b = 2
 
+    step_size = np.array([],dtype = np.float32)
+    error_euler = np.array([],dtype = np.float32)
+    error_mod = np.array([],dtype = np.float32)
+    error_rk4 = np.array([],dtype = np.float32)
+
+    y = "math.exp(-2*x)+ (1/3)*math.exp(-x)"
+    y_prime = "-2*y+math.exp(-x)"
+        
+    
+    
     for i in range(0,11):
-        step_size = np.array([])
-        actual = np.array([])
-        euler = np.array([])
-
-        y = "math.exp(-2*x)+ (1/3)*math.exp(-x)"
-        y_prime = "-2*y+math.exp(-x)"
-        # actual_initial = eval(y,{"x":a,"math":math})
+        actual_y = eval(y,{"x":b,"math":math})
+        
         obj = ODES(y_prime,1,h,a,b)
-        euler = obj.euler()
-
+        
+        obj.euler()
+        error = abs(actual_y - obj.y[-1])
+        error_euler = np.append(error_euler,error)
+        
+        obj.mod_euler()
+        error = abs(actual_y - obj.y[-1])
+        error_mod = np.append(error_mod,obj.y[-1])
+        
+        obj.runge_kutta4()
+        error = abs(actual_y - obj.y[-1])
+        error_rk4 = np.append(error_rk4,obj.y[-1])
+                
+        step_size = np.append(step_size,h)
         h = h*0.5
+        
+        
+    plt.plot(step_size,error_euler,label = 'Euler')
+    plt.plot(step_size,error_mod,label = 'Mod Euler')
+    plt.plot(step_size,error_rk4,label = 'Runge Kutta 4')
+    plt.xlabel('Step size (h)')    
+    plt.ylabel('Error')   
+    plt.title('Step Size VS Error')
+    plt.legend()
+    plt.show()
+        
+        
 
+plot_h_vs_error()

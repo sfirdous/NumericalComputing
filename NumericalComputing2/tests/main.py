@@ -52,6 +52,7 @@ import matplotlib.pyplot as plt
 # print(ivp.y)
 
 obj9 = EigenValuesAndVectors.from_file('D:/NumericalComputing/NumericalComputing2/data/power_method2.txt')
-print(obj9.power_method(1e-6))
+print(obj9.inv_power_method(1e-3))
+
 
 # plot_h_vs_error()

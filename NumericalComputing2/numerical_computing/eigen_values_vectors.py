@@ -12,6 +12,7 @@ class EigenValuesAndVectors:
             line = file.readline().strip().split()
             m,n = int(line[0]),int(line[1])
             A = torch.zeros(m,n)
+            
             v = torch.zeros(n)
             # populate matrix A
             for i in range(m):
@@ -23,6 +24,7 @@ class EigenValuesAndVectors:
             column = file.readline().strip().split()
             for j in range(n):
                 v[j] = float(column[j])
+            # A = torch.linalg.inv(A)
             
         return cls(A,v)
 
@@ -30,17 +32,26 @@ class EigenValuesAndVectors:
         
         prev_eigen_val = torch.max(self.__v).item()
         x = self.__A @ self.__v
-        dom_eigen_val = torch.max(x).item()
+    
+        
+        dom_eigen_val = x[torch.argmax(torch.abs(x))].item()
         x = x/dom_eigen_val
         
         error = abs(dom_eigen_val - prev_eigen_val)
         while(error > tol):
             x = self.__A @ x
             prev_eigen_val = dom_eigen_val
-            dom_eigen_val = torch.max(x).item()
+            dom_eigen_val = x[torch.argmax(torch.abs(x))].item()
             x = x/dom_eigen_val
             error = abs(dom_eigen_val - prev_eigen_val)
+       
         return dom_eigen_val
+
+    def inv_power_method(self,tol):
+        self.__A = torch.linalg.inv(self.__A)
+        return (1/self.power_method(tol))
+
+        
         
         
                     
